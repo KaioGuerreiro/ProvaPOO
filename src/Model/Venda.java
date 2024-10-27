@@ -9,6 +9,9 @@ public class Venda {
     private ArrayList<ProdutoVenda> carrinho = new ArrayList<>();
     private Date data;
 
+    public Venda() {
+    }
+
     public Venda(Vendedor vendedor, Cliente cliente, ArrayList<ProdutoVenda> carrinho, Date data) {
         this.vendedor = vendedor;
         this.cliente = cliente;

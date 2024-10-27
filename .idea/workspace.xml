@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cdf3e02-cf8e-437d-8851-f9d916e5b208" name="Changes" comment="Criação das classes">
-      <change afterPath="$PROJECT_DIR$/src/Control/ObjToStringControl.java" afterDir="false" />
+    <list default="true" id="4cdf3e02-cf8e-437d-8851-f9d916e5b208" name="Changes" comment="Alteracoes parametros">
+      <change afterPath="$PROJECT_DIR$/src/Control/RelatorioEstoqueControl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/ProdRelatorio.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Alerta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Alerta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Pessoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Pessoa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Control/ObjToStringControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Control/ObjToStringControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Categoria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Categoria.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Venda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Venda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Persistence/Dados.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Persistence/Dados.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,12 +84,21 @@
       <option name="project" value="LOCAL" />
       <updated>1730052029685</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Alteracoes parametros">
+      <option name="closed" value="true" />
+      <created>1730054137277</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1730054137277</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="Criação das classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Criação das classes" />
+    <MESSAGE value="Alteracoes parametros" />
+    <option name="LAST_COMMIT_MESSAGE" value="Alteracoes parametros" />
   </component>
 </project>

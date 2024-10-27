@@ -1,5 +1,7 @@
+import Persistence.Dados;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Dados dados = new Dados();
     }
 }
