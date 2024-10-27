@@ -45,7 +45,17 @@ public class RelatorioEstoqueControl {
         ArrayList<ProdRelatorio> listaFiltrada = new ArrayList<ProdRelatorio>();
 
         listaAllProd = RelatorioEstoqueControl.getAllProducts();
-        return "teste";
+        for (ProdRelatorio pr : listaAllProd){
+            if (nomeCategoria.equals(pr.nomeCategoria)){
+                listaFiltrada.add(pr);
+            }
+        }
+
+        for (ProdRelatorio pr : listaFiltrada){
+            tempListProdutos.add((Object) pr);
+        }
+
+        return ObjToStringControl.relatorioObj(tempListProdutos);
     }
 
 
