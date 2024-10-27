@@ -8,17 +8,17 @@ import Persistence.Dados;
 import java.util.ArrayList;
 
 public class RelatorioEstoqueControl {
-    private static ArrayList<ProdRelatorio> getAllProducts(){
+    private static ArrayList<ProdRelatorio> getAllProducts() {
         ArrayList<ProdRelatorio> listaDeProdutos = new ArrayList<ProdRelatorio>();
         ArrayList<Categoria> listaDeCategoria = new ArrayList<>();
 
         listaDeCategoria = Dados.getCategorias(); //copia todas as categorias armazenadas em dados
 
-        for (Categoria cat : listaDeCategoria){
+        for (Categoria cat : listaDeCategoria) {
             String nomeCategoria;
             nomeCategoria = cat.getNome();
-            for (Produto p : cat.getProdutos()){
-                if (p.isExcluido()){
+            for (Produto p : cat.getProdutos()) {
+                if (p.isExcluido()) {
                     continue;
                 }
                 ProdRelatorio tempProdRelatorio = new ProdRelatorio(nomeCategoria, p.getCodigo(), p.getNome(), p.getQuantidadeEstoque(),
@@ -30,7 +30,8 @@ public class RelatorioEstoqueControl {
 
         return listaDeProdutos;
     }
-    public static String todosProdutos(){
+
+    public static String todosProdutos() {
         ArrayList<Object> tempListProdutos = new ArrayList<Object>();
 
         for (ProdRelatorio pr : RelatorioEstoqueControl.getAllProducts())
@@ -39,24 +40,27 @@ public class RelatorioEstoqueControl {
         return ObjToStringControl.relatorioObj(tempListProdutos);
     }
 
-    public static String filtroCategoria(Dados dados, String nomeCategoria){
+    public static String filtroCategoria(String nomeCategoria) {
         ArrayList<Object> tempListProdutos = new ArrayList<Object>();
         ArrayList<ProdRelatorio> listaAllProd = new ArrayList<ProdRelatorio>();
         ArrayList<ProdRelatorio> listaFiltrada = new ArrayList<ProdRelatorio>();
 
         listaAllProd = RelatorioEstoqueControl.getAllProducts();
-        for (ProdRelatorio pr : listaAllProd){
-            if (nomeCategoria.equals(pr.nomeCategoria)){
+        for (ProdRelatorio pr : listaAllProd) {
+            if (nomeCategoria.equals(pr.nomeCategoria)) {
                 listaFiltrada.add(pr);
             }
         }
 
-        for (ProdRelatorio pr : listaFiltrada){
+        for (ProdRelatorio pr : listaFiltrada) {
             tempListProdutos.add((Object) pr);
         }
 
         return ObjToStringControl.relatorioObj(tempListProdutos);
     }
 
+    public static String filtroQuantidade() {
+        return "Teste";
+    }
 
 }
