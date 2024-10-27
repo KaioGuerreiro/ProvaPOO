@@ -19,7 +19,7 @@ public class Dados {
         return userLogged;
     }
 
-    public void setUserLogged(int userLogged) {
+    public static void setUserLogged(int userLogged) {
         Dados.userLogged = userLogged;
     }
 
@@ -27,7 +27,7 @@ public class Dados {
         return alertas;
     }
 
-    public void setAlertas(ArrayList<Alerta> alertas) {
+    public static void setAlertas(ArrayList<Alerta> alertas) {
         Dados.alertas = alertas;
     }
 
@@ -35,7 +35,7 @@ public class Dados {
         return categorias;
     }
 
-    public void setCategorias(ArrayList<Categoria> categorias) {
+    public static void setCategorias(ArrayList<Categoria> categorias) {
         Dados.categorias = categorias;
     }
 
@@ -43,7 +43,7 @@ public class Dados {
         return pessoas;
     }
 
-    public void setPessoas(ArrayList<Pessoa> pessoas) {
+    public static void setPessoas(ArrayList<Pessoa> pessoas) {
         Dados.pessoas = pessoas;
     }
 
@@ -51,7 +51,7 @@ public class Dados {
         return vendas;
     }
 
-    public void setVendas(ArrayList<Venda> vendas) {
+    public static void setVendas(ArrayList<Venda> vendas) {
         Dados.vendas = vendas;
     }
 
@@ -59,7 +59,7 @@ public class Dados {
         return fornecedores;
     }
 
-    public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
+    public static void setFornecedores(ArrayList<Fornecedor> fornecedores) {
         Dados.fornecedores = fornecedores;
     }
 }
