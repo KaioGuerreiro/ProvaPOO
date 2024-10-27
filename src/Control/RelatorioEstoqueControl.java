@@ -6,10 +6,11 @@ import Model.Produto;
 import Persistence.Dados;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RelatorioEstoqueControl {
-    static ArrayList<ProdRelatorio> getAllProducts(Dados dados){
-        ArrayList<ProdRelatorio> listaDeProdutos = new ArrayList<>();
+    private static ArrayList<ProdRelatorio> getAllProducts(Dados dados){
+        ArrayList<ProdRelatorio> listaDeProdutos = new ArrayList<ProdRelatorio>();
         ArrayList<Categoria> listaDeCategoria = new ArrayList<>();
 
         listaDeCategoria = dados.getCategorias(); //copia todas as categorias armazenadas em dados
@@ -30,4 +31,14 @@ public class RelatorioEstoqueControl {
 
         return listaDeProdutos;
     }
+    public static String todosProdutos(Dados dados){
+        ArrayList<Object> tempListProdutos = new ArrayList<Object>();
+
+        for (ProdRelatorio pr : RelatorioEstoqueControl.getAllProducts(dados))
+            tempListProdutos.add((Object) pr);
+
+        return ObjToStringControl.relatorioObj(tempListProdutos);
+    }
+
+
 }

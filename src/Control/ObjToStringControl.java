@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ObjToStringControl {
-    static String relatorioObj(ArrayList<Objects> objects){
+    static String relatorioObj(ArrayList<Object> objects){
         Venda venda = new Venda();
         if(objects.isEmpty()) {
             return null;
         }
 
-        //teste kaio
-        //comentario do ivan
 
         return "ivan luiz";
     }
