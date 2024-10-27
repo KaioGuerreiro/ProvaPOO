@@ -28,7 +28,7 @@ public class Alerta {
     }
 
     public boolean isResolvido() {
-        return resolvido;
+        return resolvido ? true : false;
     }
 
     public void setResolvido(boolean resolvido) {
