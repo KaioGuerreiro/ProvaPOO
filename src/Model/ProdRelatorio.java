@@ -2,8 +2,8 @@ package Model;
 
 public class ProdRelatorio {
     public String nomeCategoria;
-    public String nomeProd;
     public Integer prodCod;
+    public String nomeProd;
     public Integer qntEstoque;
     public Integer qntMinEstoque;
     public float preco;

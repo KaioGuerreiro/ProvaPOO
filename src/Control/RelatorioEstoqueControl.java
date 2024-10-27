@@ -8,11 +8,11 @@ import Persistence.Dados;
 import java.util.ArrayList;
 
 public class RelatorioEstoqueControl {
-    private static ArrayList<ProdRelatorio> getAllProducts(Dados dados){
+    private static ArrayList<ProdRelatorio> getAllProducts(){
         ArrayList<ProdRelatorio> listaDeProdutos = new ArrayList<ProdRelatorio>();
         ArrayList<Categoria> listaDeCategoria = new ArrayList<>();
 
-        listaDeCategoria = dados.getCategorias(); //copia todas as categorias armazenadas em dados
+        listaDeCategoria = Dados.getCategorias(); //copia todas as categorias armazenadas em dados
 
         for (Categoria cat : listaDeCategoria){
             String nomeCategoria;
@@ -30,10 +30,10 @@ public class RelatorioEstoqueControl {
 
         return listaDeProdutos;
     }
-    public static String todosProdutos(Dados dados){
+    public static String todosProdutos(){
         ArrayList<Object> tempListProdutos = new ArrayList<Object>();
 
-        for (ProdRelatorio pr : RelatorioEstoqueControl.getAllProducts(dados))
+        for (ProdRelatorio pr : RelatorioEstoqueControl.getAllProducts())
             tempListProdutos.add((Object) pr); // converte para object
 
         return ObjToStringControl.relatorioObj(tempListProdutos);
@@ -44,9 +44,8 @@ public class RelatorioEstoqueControl {
         ArrayList<ProdRelatorio> listaAllProd = new ArrayList<ProdRelatorio>();
         ArrayList<ProdRelatorio> listaFiltrada = new ArrayList<ProdRelatorio>();
 
-        listaAllProd = RelatorioEstoqueControl.getAllProducts(dados);
-        //Nao esta pronta
-        return ObjToStringControl.relatorioObj(tempListProdutos);
+        listaAllProd = RelatorioEstoqueControl.getAllProducts();
+        return "teste";
     }
 
 

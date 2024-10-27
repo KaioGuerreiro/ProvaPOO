@@ -5,61 +5,61 @@ import Model.*;
 import java.util.ArrayList;
 
 public class Dados {
-    private int userLogged;
-    private ArrayList<Alerta> alertas = new ArrayList<>();
-    private ArrayList<Categoria> categorias = new ArrayList<>();
-    private ArrayList<Pessoa> pessoas = new ArrayList<>();
-    private ArrayList<Venda> vendas = new ArrayList<>();
-    private ArrayList<Fornecedor> fornecedores = new ArrayList<>();
+    private static int userLogged;
+    private static ArrayList<Alerta> alertas = new ArrayList<>();
+    private static ArrayList<Categoria> categorias = new ArrayList<>();
+    private static ArrayList<Pessoa> pessoas = new ArrayList<>();
+    private static ArrayList<Venda> vendas = new ArrayList<>();
+    private static ArrayList<Fornecedor> fornecedores = new ArrayList<>();
 
     public Dados() {
     }
 
-    public int getUserLogged() {
+    public static int getUserLogged() {
         return userLogged;
     }
 
     public void setUserLogged(int userLogged) {
-        this.userLogged = userLogged;
+        Dados.userLogged = userLogged;
     }
 
-    public ArrayList<Alerta> getAlertas() {
+    public static ArrayList<Alerta> getAlertas() {
         return alertas;
     }
 
     public void setAlertas(ArrayList<Alerta> alertas) {
-        this.alertas = alertas;
+        Dados.alertas = alertas;
     }
 
-    public ArrayList<Categoria> getCategorias() {
+    public static ArrayList<Categoria> getCategorias() {
         return categorias;
     }
 
     public void setCategorias(ArrayList<Categoria> categorias) {
-        this.categorias = categorias;
+        Dados.categorias = categorias;
     }
 
-    public ArrayList<Pessoa> getPessoas() {
+    public static ArrayList<Pessoa> getPessoas() {
         return pessoas;
     }
 
     public void setPessoas(ArrayList<Pessoa> pessoas) {
-        this.pessoas = pessoas;
+        Dados.pessoas = pessoas;
     }
 
-    public ArrayList<Venda> getVendas() {
+    public static ArrayList<Venda> getVendas() {
         return vendas;
     }
 
     public void setVendas(ArrayList<Venda> vendas) {
-        this.vendas = vendas;
+        Dados.vendas = vendas;
     }
 
-    public ArrayList<Fornecedor> getFornecedores() {
+    public static ArrayList<Fornecedor> getFornecedores() {
         return fornecedores;
     }
 
     public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
-        this.fornecedores = fornecedores;
+        Dados.fornecedores = fornecedores;
     }
 }
