@@ -221,7 +221,7 @@ public class Main {
                 case 2: {   //Relatorios
                     switch (Tela.relatorios()) {
                         case 0: {   //Venda
-                            //control
+                            RelatorioVendaControl.gen();
                             break;
                         }
                         case 1: {   //Estoque

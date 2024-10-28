@@ -115,6 +115,13 @@ public class Tela {
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, tiposRelat, tiposRelat[0]);
     }
 
+    public static int relatoriosVendas() {
+        Object[] tiposRelat = {"Todos", "Por Produto", "Por Categoria", "Por Data", "Por Volume"};
+
+        return JOptionPane.showOptionDialog(null, "", "Tipos de relatorios de venda",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, tiposRelat, tiposRelat[0]);
+    }
+
     public static int administrativo() {
         Object[] admBtts = {"Avisos", "Cadastrar Usuario", "voltar"};
 
