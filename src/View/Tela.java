@@ -2,6 +2,7 @@ package View;
 
 import Control.GerenciaFornecedor;
 import Control.GerenciarCategoria;
+import Control.GerenciarProduto;
 
 import Control.LoginControl;
 import Control.SafeInputControl;
@@ -68,8 +69,7 @@ public class Tela {
     public static int cadastrosProduto() {
         switch (optCadastrosBTT()) {
             case 0: {
-                JOptionPane.showMessageDialog(null, "criou produto");
-                //control
+                GerenciarProduto.adicionar();
                 break;
             }
             case 1: {

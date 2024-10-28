@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class GerenciaFornecedor {
-    private static int encontrar(String nome) {
+    public static int encontrar(String nome) {
         ArrayList<Fornecedor> forn = Dados.getFornecedores();
 
         for (int i = 0; i < forn.size(); i++) {

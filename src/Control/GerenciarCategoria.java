@@ -8,14 +8,7 @@ import java.util.ArrayList;
 
 
 public class GerenciarCategoria {
-    /*
-    encontrar
-    criar
-    adicionar
-    modificar
-    excluir
-     */
-    private static int encontrar(String nome) {
+    public static int encontrar(String nome) {
         ArrayList<Categoria> cats = Dados.getCategorias();
 
         for (int i = 0; i < cats.size(); i++) {
