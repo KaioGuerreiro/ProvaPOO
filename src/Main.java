@@ -235,8 +235,21 @@ public class Main {
                     }
                     break;
                 }
-                case 3: {   //Avisos (somenteADM)
-                    //control
+                case 3: {   //Admnistrativos
+                    switch (Tela.administrativo()) {
+                        case 0: {    //ver avisos
+                            //control
+                            break;
+                        }
+                        case 1: {    //adicionar pessoa.
+                            //control
+                            break;
+                        }
+                        case 2: {    //voltar menu principal
+
+                            break;
+                        }
+                    }
                     break;
                 }
                 case 4: {   //sair

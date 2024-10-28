@@ -1,11 +1,13 @@
 package View;
 
+import Control.GerenciaFornecedor;
+
 import javax.swing.*;
 
 public class Tela {
 
     public static int menuPrincipal() {
-        Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Avisos", "sair"};
+        Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Administrativo", "sair"};
 
         return JOptionPane.showOptionDialog(null, "", "Menu Principal",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, mainBtt, mainBtt[0]);
@@ -77,16 +79,15 @@ public class Tela {
     public static int cadastrosFornecedor() {
         switch (optCadastrosBTT()) {
             case 0: {
-                JOptionPane.showMessageDialog(null, "criou fornecedor");
-                //control
+                GerenciaFornecedor.adicionar();
                 break;
             }
             case 1: {
-
+                GerenciaFornecedor.modificar();
                 break;
             }
             case 2: {
-
+                GerenciaFornecedor.excluir();
                 break;
             }
             case 3: {
@@ -112,5 +113,12 @@ public class Tela {
 
         return JOptionPane.showOptionDialog(null, "", "Relatorios",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, tiposRelat, tiposRelat[0]);
+    }
+
+    public static int administrativo() {
+        Object[] admBtts = {"Avisos", "Cadastrar Usuario", "voltar"};
+
+        return JOptionPane.showOptionDialog(null, "", "Administração",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, admBtts, admBtts[0]);
     }
 }
