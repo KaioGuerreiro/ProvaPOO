@@ -3,6 +3,7 @@ import Control.RelatorioVendaControl;
 import Control.SafeInputControl;
 import Model.*;
 import Persistence.Dados;
+import View.Tela;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -188,57 +189,48 @@ public class Main {
         //setAll();
         //testInputs();
 
-
-        int tmp = 0;
-
-        Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Avisos", "sair"};
-
-        Object[] cadstroBtt = {"Categoria", "Produto", "Fornecedor", "voltar"};
-        Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
-
-        Object[] relatBtt = {"Vendas", "Estoque", "voltar"};
-
-
         boolean running = true;
         while (running) {
 
-            mainBtt[3] = tmp > 0 ? "Avisos(" + tmp + ")" : "Avisos";
-            tmp++;
-
-            switch (JOptionPane.showOptionDialog(null, "", "Menu Principal",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, mainBtt, mainBtt[0])) {
-                case 0: {
+            switch (Tela.menuPrincipal()) {
+                case 0: {   //Realizar vendas
 
                     break;
                 }
-                case 1: {
+                case 1: {   //Consultar cadastros
+                    switch (Tela.cadastros()) {
+                        case 0: {    //Categoria
+                            Tela.cadastrosCategoria();
+                            break;
+                        }
+                        case 1: {    //Produto
+                            Tela.cadastrosProduto();
+                            break;
+                        }
+                        case 2: {    //Fornecedor
+                            Tela.cadastrosFornecedor();
+                            break;
+                        }
+                        case 3: {    //voltar menu principal
+
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case 2: {   //Relatorios
+                    Tela.relatorios();
+                    break;
+                }
+                case 3: {   //Avisos (somenteADM)
 
                     break;
                 }
-                case 2: {
-
-                    break;
-                }
-                case 3: {
-
-                    break;
-                }
-                case 4: {
+                case 4: {   //sair
 
                     break;
                 }
             }
-
-            JOptionPane.showOptionDialog(null, "", "Cadastros",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, cadstroBtt, cadstroBtt[0]);
-
-            JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
-
-            JOptionPane.showOptionDialog(null, "", "Relatorios",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, relatBtt, relatBtt[0]);
-
-
         }
     }
 }

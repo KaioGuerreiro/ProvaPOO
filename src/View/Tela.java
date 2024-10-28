@@ -17,4 +17,33 @@ public class Tela {
         return JOptionPane.showOptionDialog(null, "", "Cadastros",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, cadstroBtt, cadstroBtt[0]);
     }
+
+    public static int cadastrosCategoria() {
+        Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
+
+        return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+    }
+
+    public static int cadastrosProduto() {
+        Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
+
+        return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+    }
+
+    public static int cadastrosFornecedor() {
+        Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
+
+        return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+    }
+
+
+    public static int relatorios() {
+        Object[] relatBtt = {"Vendas", "Estoque", "voltar"};
+
+        return JOptionPane.showOptionDialog(null, "", "Relatorios",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, relatBtt, relatBtt[0]);
+    }
 }
