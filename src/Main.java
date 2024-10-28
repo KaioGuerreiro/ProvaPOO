@@ -192,6 +192,11 @@ public class Main {
         boolean running = true;
         while (running) {
 
+            if (Tela.loginMenu() != 0 || Tela.loginCod() < 0) {
+                JOptionPane.showMessageDialog(null, "Saindo...");
+                return;
+            }
+
             switch (Tela.menuPrincipal()) {
                 case 0: {   //Realizar vendas
                     //control
