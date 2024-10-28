@@ -126,11 +126,6 @@ public class Main {
 
         Dados.setVendas(vendas);
 
-    }
-
-    public static void main(String[] args) {
-
-        setAll();
 
         if (JOptionPane.showInputDialog("ver produtos?").equals("sim")) {
 
@@ -166,6 +161,117 @@ public class Main {
 
         }
 
+    }
 
+    //Tirar essa função daqui
+    static String safeString(String titulo, String msg) {
+
+        boolean repeat = false;
+        do {
+            if (repeat) {
+                if (JOptionPane.showConfirmDialog(null, "Repetir?") == JOptionPane.NO_OPTION) {
+                    return null;
+                }
+            }
+
+            try {
+                String str = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.DEFAULT_OPTION);
+                if (str.isEmpty() || str.isBlank()) repeat = true;
+                else return str;
+
+            } catch (Exception e) {
+                repeat = true;
+            }
+        } while (repeat);
+
+        return null;
+    }
+
+    static Integer safeInteger(String titulo, String msg) {
+
+        boolean repeat = false;
+        do {
+            if (repeat) {
+                if (JOptionPane.showConfirmDialog(null, "Repetir?") == JOptionPane.NO_OPTION) {
+                    return null;
+                }
+            }
+
+            try {
+                String str = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.DEFAULT_OPTION);
+                if (str.isEmpty() || str.isBlank()) repeat = true;
+                else return Integer.valueOf(str);
+
+            } catch (Exception e) {
+                repeat = true;
+            }
+        } while (repeat);
+
+        return null;
+    }
+
+    static Float safeFloat(String titulo, String msg) {
+
+        boolean repeat = false;
+        do {
+            if (repeat) {
+                if (JOptionPane.showConfirmDialog(null, "Repetir?") == JOptionPane.NO_OPTION) {
+                    return null;
+                }
+            }
+
+            try {
+                String str = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.DEFAULT_OPTION);
+                if (str.isEmpty() || str.isBlank()) repeat = true;
+                else return Float.valueOf(str);
+
+            } catch (Exception e) {
+                repeat = true;
+            }
+        } while (repeat);
+
+        return null;
+    }
+
+    public static void main(String[] args) {
+        //setAll();
+        int tmp = 0;
+
+        Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Avisos", "sair"};
+
+        Object[] cadstroBtt = {"Categoria", "Produto", "Fornecedor", "voltar"};
+        Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
+
+        Object[] relatBtt = {"Vendas", "Estoque", "voltar"};
+
+
+        boolean running = true;
+        while (running) {
+            mainBtt[3] = tmp > 0 ? "Avisos(" + tmp + ")" : "Avisos";
+            tmp++;
+            /*
+            String str = safeString("String", "Digite uma string");
+            if ("sair".equals(str)) running = false;
+
+            Float floatt = safeFloat("Float", "Digite um numero");
+            if (Float.valueOf(999).equals(floatt)) running = false;
+
+            Integer inteiro = safeInteger("Interio", "Digite um numero");
+            if (Integer.valueOf(999).equals(inteiro)) running = false;
+             */
+            JOptionPane.showOptionDialog(null, "", "Menu Principal",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, mainBtt, mainBtt[0]);
+
+            JOptionPane.showOptionDialog(null, "", "Cadastros",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, cadstroBtt, cadstroBtt[0]);
+
+            JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+
+            JOptionPane.showOptionDialog(null, "", "Relatorios",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, relatBtt, relatBtt[0]);
+
+
+        }
     }
 }
