@@ -96,22 +96,33 @@ public class RelatorioEstoqueControl {
         switch (Tela.relatoriosEstoques()) {
             case 0: {   //Todos
                 JOptionPane.showMessageDialog(null, todosProdutos(),
-                        "todos", JOptionPane.DEFAULT_OPTION);
+                        "Mostrando todos os produtos", JOptionPane.DEFAULT_OPTION);
                 break;
             }
             case 1: {   //Categoria
-                JOptionPane.showMessageDialog(null, filtroCategoria("nomeCat2"),
-                        "Categoria", JOptionPane.DEFAULT_OPTION);
+                String nomeCat = SafeInputControl.sString("Filtrar por categoria", "Nome da categoria:");
+                if (nomeCat == null) break;
+
+                JOptionPane.showMessageDialog(null, filtroCategoria(nomeCat),
+                        "Mostrando os produtos pertencentes à categoria " + nomeCat, JOptionPane.DEFAULT_OPTION);
                 break;
             }
             case 2: {   //Produto
-                JOptionPane.showMessageDialog(null, filtroProduto(1),
-                        "produto", JOptionPane.DEFAULT_OPTION);
+                Integer prodCod = SafeInputControl.sInteger("Filtrar por Produto", "Codigo (ou nome posteriormente) do produto:");
+                if (prodCod == null) break;
+
+                JOptionPane.showMessageDialog(null, filtroProduto(prodCod),
+                        "Mostrando o produto de codigo " + prodCod, JOptionPane.DEFAULT_OPTION);
                 break;
             }
             case 3: {   //Quantidade
-                JOptionPane.showMessageDialog(null, filtroQuantidade(8, 10),
-                        "quantidade", JOptionPane.DEFAULT_OPTION);
+                Integer min = 8, max = 10;
+
+                Integer prodCod = SafeInputControl.sInteger("Filtrar por quantidade", "Codigo (ou nome posteriormente) do produto:");
+                if (prodCod == null) break;
+
+                JOptionPane.showMessageDialog(null, filtroQuantidade(min, max),
+                        "Mostrando os produtos com estoque entre " + min + " e " + max, JOptionPane.DEFAULT_OPTION);
                 break;
             }
         }
