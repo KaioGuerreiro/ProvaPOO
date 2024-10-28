@@ -1,3 +1,4 @@
+import Control.LoginControl;
 import Control.RelatorioEstoqueControl;
 import Control.RelatorioVendaControl;
 import Control.SafeInputControl;
@@ -183,18 +184,37 @@ public class Main {
         else JOptionPane.showMessageDialog(null, "operação cancelada");
     }
 
+    private static void addAdmUser() {
+        Administrador adm = new Administrador();
+
+        adm.setNome("ADMNISTRADOR");
+        adm.setContato("ADM@ADM.COM");
+        adm.setCanGerUser(true);
+        adm.setId(0);
+
+        ArrayList<Pessoa> pps = Dados.getPessoas();
+        pps.add(adm);
+
+        Dados.setPessoas(pps);
+    }
+
 
     public static void main(String[] args) {
         setTestDatas();
         //getTestDAtas();
         //testInputs();
 
+        addAdmUser();
+
         boolean running = true;
         while (running) {
 
-            if (Tela.loginMenu() != 0 || Tela.loginCod() < 0) {
+            if (Tela.loginMenu() != 0) {
                 JOptionPane.showMessageDialog(null, "Saindo...");
                 return;
+            } else if (LoginControl.loginCod() == null) {
+                JOptionPane.showMessageDialog(null, "Login não permitido.");
+                continue;
             }
 
             switch (Tela.menuPrincipal()) {

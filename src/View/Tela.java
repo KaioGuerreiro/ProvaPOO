@@ -4,9 +4,6 @@ import Control.GerenciaFornecedor;
 import Control.GerenciarCategoria;
 import Control.GerenciarProduto;
 
-import Control.LoginControl;
-import Control.SafeInputControl;
-
 import javax.swing.*;
 
 public class Tela {
@@ -14,10 +11,6 @@ public class Tela {
         Object[] loginBtt = {"Login", "Finalizar"};
         return JOptionPane.showOptionDialog(null, "", "Bem Vindo!!!",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, loginBtt, loginBtt[0]);
-    }
-
-    public static Integer loginCod() {
-        return LoginControl.autLogin(SafeInputControl.sInteger("Login", "Infome seu Codigo"));
     }
 
 
