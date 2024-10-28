@@ -34,7 +34,7 @@ public class RelatorioEstoqueControl {
     public static String todosProdutos() {
         ArrayList<Object> tempListProdutos = new ArrayList<Object>();
 
-        for (ProdRelatorio pr : RelatorioEstoqueControl.getAllProducts())
+        for (ProdRelatorio pr : getAllProducts())
             tempListProdutos.add((Object) pr); // converte para object
 
         return ObjToStringControl.relatorioObj(tempListProdutos);
@@ -59,7 +59,17 @@ public class RelatorioEstoqueControl {
         return ObjToStringControl.relatorioObj(tempListProdutos);
     }
 
-    public static String filtroQuantidade() {
+    public static String filtroQuantidade(Integer min, Integer max) {
+        ArrayList<Object> tempListProdutos = new ArrayList<Object>();
+        ArrayList<ProdRelatorio> listaAllProd = new ArrayList<ProdRelatorio>();
+        ArrayList<ProdRelatorio> listaFiltrada = new ArrayList<ProdRelatorio>();
+
+        listaAllProd = getAllProducts();
+
+        for (ProdRelatorio pr : listaAllProd) {
+
+        }
+
         return "Teste";
     }
 
