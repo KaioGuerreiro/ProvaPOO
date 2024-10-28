@@ -1,5 +1,6 @@
 import Control.RelatorioEstoqueControl;
 import Control.RelatorioVendaControl;
+import Control.SafeInputControl;
 import Model.*;
 import Persistence.Dados;
 
@@ -163,75 +164,6 @@ public class Main {
 
     }
 
-    //Tirar essa função daqui
-    static String safeString(String titulo, String msg) {
-
-        boolean repeat = false;
-        do {
-            if (repeat) {
-                if (JOptionPane.showConfirmDialog(null, "Repetir?") == JOptionPane.NO_OPTION) {
-                    return null;
-                }
-            }
-
-            try {
-                String str = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.DEFAULT_OPTION);
-                if (str.isEmpty() || str.isBlank()) repeat = true;
-                else return str;
-
-            } catch (Exception e) {
-                repeat = true;
-            }
-        } while (repeat);
-
-        return null;
-    }
-
-    static Integer safeInteger(String titulo, String msg) {
-
-        boolean repeat = false;
-        do {
-            if (repeat) {
-                if (JOptionPane.showConfirmDialog(null, "Repetir?") == JOptionPane.NO_OPTION) {
-                    return null;
-                }
-            }
-
-            try {
-                String str = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.DEFAULT_OPTION);
-                if (str.isEmpty() || str.isBlank()) repeat = true;
-                else return Integer.valueOf(str);
-
-            } catch (Exception e) {
-                repeat = true;
-            }
-        } while (repeat);
-
-        return null;
-    }
-
-    static Float safeFloat(String titulo, String msg) {
-
-        boolean repeat = false;
-        do {
-            if (repeat) {
-                if (JOptionPane.showConfirmDialog(null, "Repetir?") == JOptionPane.NO_OPTION) {
-                    return null;
-                }
-            }
-
-            try {
-                String str = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.DEFAULT_OPTION);
-                if (str.isEmpty() || str.isBlank()) repeat = true;
-                else return Float.valueOf(str);
-
-            } catch (Exception e) {
-                repeat = true;
-            }
-        } while (repeat);
-
-        return null;
-    }
 
     public static void main(String[] args) {
         //setAll();
@@ -247,6 +179,17 @@ public class Main {
 
         boolean running = true;
         while (running) {
+            Integer tmpInt = SafeInputControl.sInteger("SafeStrig", "uma inteiro:");
+            if (tmpInt != null) JOptionPane.showMessageDialog(null, tmpInt);
+            else JOptionPane.showMessageDialog(null, "operação cancelada");
+
+
+            Float tmpFlo = SafeInputControl.sFloat("SafeStrig", "uma float:");
+            if (tmpFlo != null) JOptionPane.showMessageDialog(null, tmpFlo);
+            else JOptionPane.showMessageDialog(null, "operação cancelada");
+
+            if (tmp < 100) continue;
+
             mainBtt[3] = tmp > 0 ? "Avisos(" + tmp + ")" : "Avisos";
             tmp++;
             /*
