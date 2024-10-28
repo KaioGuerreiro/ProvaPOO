@@ -1,32 +1,32 @@
 package Control;
 
-import Model.Venda;
 import Model.ProdRelatorio;
+import Model.ProdutoVenda;
+import Model.Venda;
 
 import java.util.ArrayList;
 
 public class ObjToStringControl {
 
-    static String relatorioObj(ArrayList<Object> objects){
+    static String relatorioObj(ArrayList<Object> objects) throws Exception {
         ArrayList<Venda> tmpVenda = new ArrayList<Venda>();
 
-        if(objects.isEmpty()) {
-            return null;
+        if (objects.isEmpty()) {
+            throw new Exception("Vetor de Object não pode ser vazio!");
         }
 
         Object obj = objects.getFirst();
 
         //Verifica se todo o conteudo do vetor é igual.
-        for (Object o : objects){
-            if (!obj.getClass().equals(o.getClass())){
-                return null;
+        for (Object o : objects) {
+            if (!obj.getClass().equals(o.getClass())) {
+                throw new Exception("Todos os Objects do vetor devem ser do mesmo tipo!");
             }
-
         }
 
-        if (obj instanceof ProdRelatorio){
-            StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder();
 
+        if (obj instanceof ProdRelatorio) {
             //Para cada um do vetor, criar uma linha.
             objects.forEach(pr -> {
                 ProdRelatorio tmpPr = (ProdRelatorio) pr; //Converte os Objects em ProdRelatorio.
@@ -37,18 +37,39 @@ public class ObjToStringControl {
                         "\n");
 
             });
+        } else if (obj instanceof Venda) {
+            /* RESULTADO TXT
+                IDVendedor | nomeVendedor | IDCliente | nomeCliente | destinoCliente | data
+                    cod | nome | preco | qntVendida | subTotal
+                    [ . . . ]
+                totalVenda
+            */
 
-            return result.toString();
-        }
-        else if (obj instanceof Venda){
-            objects.forEach(v -> {
+            float totalVenda = 0;
+
+            for (Object v : objects) {
                 Venda tmpV = (Venda) v; //Converte os Objects em Venda.
 
-                String IdVendedor = Integer.toString(tmpV.getVendedor().getId());
-                String nomeVendedr = tmpV.getVendedor().toString();
-            });
-        }
+                //Cabecalho
+                result.append(tmpV.getVendedor().getId() + ";" + tmpV.getVendedor().getNome() + ";" + tmpV.getCliente().getId() +
+                        ";" + tmpV.getCliente().getNome() + ";" + tmpV.getCliente().getDestino() + ";" + tmpV.getData() + "\n");
 
-        return "nothing";
+                //Produtos
+                StringBuilder strProds = new StringBuilder();
+
+                for (ProdutoVenda c : tmpV.getCarrinho()) {
+                    float subTotal = c.getPreco() * c.getQntVendida();
+                    totalVenda += subTotal;
+
+                    strProds.append(c.getCodigo() + ";" + c.getNome() + ";" + c.getPreco() + ";" + c.getQntVendida() + ";" + subTotal + "\n");
+                }
+            }
+            ;
+
+            result.append(totalVenda + "\n");
+
+        } else throw new Exception("O tipo de Object não foi reconhecido!");
+
+        return result.toString();
     }
 }

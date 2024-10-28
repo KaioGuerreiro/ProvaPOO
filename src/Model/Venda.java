@@ -1,22 +1,22 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Venda {
     private Vendedor vendedor;
     private Cliente cliente;
     private ArrayList<ProdutoVenda> carrinho = new ArrayList<>();
-    private Date data;
+    private LocalDate data;
 
     public Venda() {
     }
 
-    public Venda(Vendedor vendedor, Cliente cliente, ArrayList<ProdutoVenda> carrinho, Date data) {
+    public Venda(Vendedor vendedor, Cliente cliente, ArrayList<ProdutoVenda> carrinho) {
         this.vendedor = vendedor;
         this.cliente = cliente;
         this.carrinho = carrinho;
-        this.data = data;
+        this.data = LocalDate.now();
     }
 
     public Vendedor getVendedor() {
@@ -43,11 +43,11 @@ public class Venda {
         this.carrinho = carrinho;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setData() {
+        this.data = LocalDate.now();
     }
 }

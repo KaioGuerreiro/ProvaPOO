@@ -37,7 +37,11 @@ public class RelatorioEstoqueControl {
         for (ProdRelatorio pr : getAllProducts())
             tempListProdutos.add((Object) pr); // converte para object
 
-        return ObjToStringControl.relatorioObj(tempListProdutos);
+        try {
+            return ObjToStringControl.relatorioObj(tempListProdutos);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static String filtroCategoria(String nomeCategoria) {
@@ -56,7 +60,12 @@ public class RelatorioEstoqueControl {
             tempListProdutos.add((Object) pr);
         }
 
-        return ObjToStringControl.relatorioObj(tempListProdutos);
+        try {
+            return ObjToStringControl.relatorioObj(tempListProdutos);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     public static String filtroQuantidade(Integer min, Integer max) {

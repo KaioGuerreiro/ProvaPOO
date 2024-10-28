@@ -13,21 +13,20 @@ public class RelatorioVendaControl {
 
     public static String filtroProduto(Integer codProd) {
         ArrayList<Object> tempListaVendas = new ArrayList<>();
-        ArrayList<Venda> listaFiltrada = new ArrayList<Venda>();
 
         for (Venda v : getAllVendas()) {
             for (ProdutoVenda pv : v.getCarrinho()) {
                 if (pv.getCodigo() == codProd) {
-                    listaFiltrada.add(v);
+                    tempListaVendas.add(v);
                     break;
                 }
             }
         }
 
-        for (Venda v : listaFiltrada) {
-            tempListaVendas.add((Object) v);
+        try {
+            return ObjToStringControl.relatorioObj(tempListaVendas);
+        } catch (Exception e) {
+            return null;
         }
-
-        return ObjToStringControl.relatorioObj(tempListaVendas);
     }
 }
