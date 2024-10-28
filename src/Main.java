@@ -219,7 +219,20 @@ public class Main {
                     break;
                 }
                 case 2: {   //Relatorios
-                    Tela.relatorios();
+                    switch (Tela.relatorios()) {
+                        case 0: {   //Venda
+
+                            break;
+                        }
+                        case 1: {   //Estoque
+
+                            break;
+                        }
+                        case 2: {   //voltar menu principal
+
+                            break;
+                        }
+                    }
                     break;
                 }
                 case 3: {   //Avisos (somenteADM)
@@ -227,7 +240,7 @@ public class Main {
                     break;
                 }
                 case 4: {   //sair
-
+                    running = false;
                     break;
                 }
             }

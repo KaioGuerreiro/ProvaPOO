@@ -18,25 +18,81 @@ public class Tela {
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, cadstroBtt, cadstroBtt[0]);
     }
 
-    public static int cadastrosCategoria() {
+    private static int optCadastrosBTT() {
         Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
 
         return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+
+    }
+
+    public static int cadastrosCategoria() {
+        switch (optCadastrosBTT()) {
+            case 0: {
+                JOptionPane.showMessageDialog(null, "criou categoria");
+                break;
+            }
+            case 1: {
+
+                break;
+            }
+            case 2: {
+
+                break;
+            }
+            case 3: {
+
+                break;
+            }
+        }
+
+        return 0;
     }
 
     public static int cadastrosProduto() {
-        Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
+        switch (optCadastrosBTT()) {
+            case 0: {
+                JOptionPane.showMessageDialog(null, "criou produto");
+                break;
+            }
+            case 1: {
 
-        return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+                break;
+            }
+            case 2: {
+
+                break;
+            }
+            case 3: {
+
+                break;
+            }
+        }
+
+        return 0;
     }
 
     public static int cadastrosFornecedor() {
-        Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
+        switch (optCadastrosBTT()) {
+            case 0: {
+                JOptionPane.showMessageDialog(null, "criou fornecedor");
+                break;
+            }
+            case 1: {
 
-        return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+                break;
+            }
+            case 2: {
+
+                break;
+            }
+            case 3: {
+
+                break;
+            }
+        }
+
+        return 0;
     }
 
 
