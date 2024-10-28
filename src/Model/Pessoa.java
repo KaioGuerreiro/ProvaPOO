@@ -3,7 +3,7 @@ package Model;
 public abstract class Pessoa {
     private String nome;
     private String contato;
-    private int id;
+    private Integer id;
 
     public String getNome() {
         return nome;
@@ -21,11 +21,11 @@ public abstract class Pessoa {
         this.contato = contato;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

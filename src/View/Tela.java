@@ -3,9 +3,22 @@ package View;
 import Control.GerenciaFornecedor;
 import Control.GerenciarCategoria;
 
+import Control.LoginControl;
+import Control.SafeInputControl;
+
 import javax.swing.*;
 
 public class Tela {
+    public static int loginMenu() {
+        Object[] loginBtt = {"Login", "Finalizar"};
+        return JOptionPane.showOptionDialog(null, "", "Bem Vindo!!!",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, loginBtt, loginBtt[0]);
+    }
+
+    public static Integer loginCod() {
+        return LoginControl.autLogin(SafeInputControl.sInteger("Login", "Infome seu Codigo"));
+    }
+
 
     public static int menuPrincipal() {
         Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Administrativo", "sair"};
