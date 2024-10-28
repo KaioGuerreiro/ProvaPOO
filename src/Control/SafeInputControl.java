@@ -26,6 +26,7 @@ public class SafeInputControl {
             try {
                 String str = JOptionPane.showInputDialog(null, msg, titulo, JOptionPane.DEFAULT_OPTION);
 
+                //Verifica se da pra converter, se não, pergunta se quer repetir.
                 if (str != null && !str.isBlank()) {
                     switch (tipo) {
                         case 1: {
@@ -46,7 +47,7 @@ public class SafeInputControl {
         }
     }
 
-    public static String sSTring(String titulo, String msg) {
+    public static String sString(String titulo, String msg) {
         return getInput(titulo, msg, 1);
     }
 

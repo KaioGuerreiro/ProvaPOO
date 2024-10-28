@@ -164,9 +164,31 @@ public class Main {
 
     }
 
+    static void testInputs() {
+
+        String tmpstr = SafeInputControl.sString("SafeStrig", "uma string:");
+        if (tmpstr != null) JOptionPane.showMessageDialog(null, tmpstr);
+        else JOptionPane.showMessageDialog(null, "operação cancelada");
+
+        Integer tmpInt = SafeInputControl.sInteger("SafeStrig", "um inteiro:");
+        if (tmpInt != null) JOptionPane.showMessageDialog(null, tmpInt);
+        else JOptionPane.showMessageDialog(null, "operação cancelada");
+
+
+        Float tmpFlo = SafeInputControl.sFloat("SafeStrig", "um float:");
+        if (tmpFlo != null) JOptionPane.showMessageDialog(null, tmpFlo);
+        else JOptionPane.showMessageDialog(null, "operação cancelada");
+    }
+
+
+    //tirar essas funções daqui.
+
 
     public static void main(String[] args) {
         //setAll();
+        //testInputs();
+
+
         int tmp = 0;
 
         Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Avisos", "sair"};
@@ -179,31 +201,33 @@ public class Main {
 
         boolean running = true;
         while (running) {
-            Integer tmpInt = SafeInputControl.sInteger("SafeStrig", "uma inteiro:");
-            if (tmpInt != null) JOptionPane.showMessageDialog(null, tmpInt);
-            else JOptionPane.showMessageDialog(null, "operação cancelada");
-
-
-            Float tmpFlo = SafeInputControl.sFloat("SafeStrig", "uma float:");
-            if (tmpFlo != null) JOptionPane.showMessageDialog(null, tmpFlo);
-            else JOptionPane.showMessageDialog(null, "operação cancelada");
-
-            if (tmp < 100) continue;
 
             mainBtt[3] = tmp > 0 ? "Avisos(" + tmp + ")" : "Avisos";
             tmp++;
-            /*
-            String str = safeString("String", "Digite uma string");
-            if ("sair".equals(str)) running = false;
 
-            Float floatt = safeFloat("Float", "Digite um numero");
-            if (Float.valueOf(999).equals(floatt)) running = false;
+            switch (JOptionPane.showOptionDialog(null, "", "Menu Principal",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, mainBtt, mainBtt[0])) {
+                case 0: {
 
-            Integer inteiro = safeInteger("Interio", "Digite um numero");
-            if (Integer.valueOf(999).equals(inteiro)) running = false;
-             */
-            JOptionPane.showOptionDialog(null, "", "Menu Principal",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, mainBtt, mainBtt[0]);
+                    break;
+                }
+                case 1: {
+
+                    break;
+                }
+                case 2: {
+
+                    break;
+                }
+                case 3: {
+
+                    break;
+                }
+                case 4: {
+
+                    break;
+                }
+            }
 
             JOptionPane.showOptionDialog(null, "", "Cadastros",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, cadstroBtt, cadstroBtt[0]);
