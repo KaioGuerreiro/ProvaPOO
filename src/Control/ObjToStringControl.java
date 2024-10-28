@@ -45,10 +45,11 @@ public class ObjToStringControl {
                 totalVenda
             */
 
-            float totalVenda = 0;
+            float totalGeral = 0f;
 
             for (Object v : objects) {
-                Venda tmpV = (Venda) v; //Converte os Objects em Venda.
+                float totalVenda = 0;
+                Venda tmpV = (Venda) v; //Converte os Objects em Venda
 
                 //Cabecalho
                 result.append(tmpV.getVendedor().getId() + ";" + tmpV.getVendedor().getNome() + ";" + tmpV.getCliente().getId() +
@@ -63,10 +64,13 @@ public class ObjToStringControl {
 
                     strProds.append(c.getCodigo() + ";" + c.getNome() + ";" + c.getPreco() + ";" + c.getQntVendida() + ";" + subTotal + "\n");
                 }
-            }
-            ;
 
-            result.append(totalVenda + "\n");
+                result.append(strProds + "" + totalVenda + "\n");
+                totalGeral += totalVenda;
+            }
+
+            result.append("TotalGeral:" + totalGeral + "\n");
+
 
         } else throw new Exception("O tipo de Object não foi reconhecido!");
 

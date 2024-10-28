@@ -1,14 +1,13 @@
 import Control.RelatorioEstoqueControl;
-import Model.Categoria;
-import Model.Fornecedor;
-import Model.Produto;
+import Control.RelatorioVendaControl;
+import Model.*;
 import Persistence.Dados;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class Main {
-    static void addProdutos() {
+    static void setAll() {
         Fornecedor forn = new Fornecedor();
         forn.setContato("contForn");
         forn.setNome("nomeForn");
@@ -57,18 +56,99 @@ public class Main {
         Dados.setCategorias(tmpCats);
 
 
+
+
+
+
+
+
+
+
+        /*
+        private int codigo;
+        private String nome;
+        private float preco;
+        private Fornecedor fornecedor;
+        private int qntVendida
+         */
+        ProdutoVenda pV = new ProdutoVenda();
+        pV.setCodigo(3);
+        pV.setNome("pv1");
+        pV.setPreco(25.0F);
+        pV.setFornecedor(forn);
+        pV.setQntVendida(10);
+
+        ProdutoVenda pV2 = new ProdutoVenda();
+        pV2.setCodigo(9);
+        pV2.setNome("pv18");
+        pV2.setPreco(30.0F);
+        pV2.setFornecedor(forn);
+        pV2.setQntVendida(5);
+
+        ArrayList<ProdutoVenda> vecPVs = new ArrayList<ProdutoVenda>();
+        vecPVs.add(pV);
+        vecPVs.add(pV2);
+        vecPVs.add(pV);
+        vecPVs.add(pV);
+
+        ArrayList<ProdutoVenda> vecPVs2 = new ArrayList<ProdutoVenda>();
+        vecPVs2.add(pV2);
+        vecPVs2.add(pV2);
+
+
+        Vendedor vendedor = new Vendedor();
+        vendedor.setId(1);
+        vendedor.setNome("ivan");
+        vendedor.setContato("996921942");
+
+        Cliente cliente = new Cliente();
+        cliente.setDestino("casa do caraleo");
+        cliente.setContato("emailcliente");
+        cliente.setId(1);
+        cliente.setNome("jubiscleiudons");
+
+        /*
+        this.vendedor = vendedor;
+        this.cliente = cliente;
+        this.carrinho = carrinho;
+        this.data = LocalDate.now();
+         */
+        Venda v = new Venda(vendedor, cliente, vecPVs);
+        Venda v2 = new Venda(vendedor, cliente, vecPVs2);
+
+        ArrayList<Venda> vendas = new ArrayList<>();
+        vendas.add(v);
+        vendas.add(v2);
+
+        Dados.setVendas(vendas);
+
     }
 
     public static void main(String[] args) {
 
-        addProdutos();
+        setAll();
 
         if (JOptionPane.showInputDialog("ver produtos?").equals("sim")) {
 
-            JOptionPane.showMessageDialog(null, RelatorioEstoqueControl.todosProdutos());
+            JOptionPane.showMessageDialog(null, RelatorioEstoqueControl.todosProdutos(),
+                    "todos", JOptionPane.DEFAULT_OPTION);
+
+            JOptionPane.showMessageDialog(null, RelatorioEstoqueControl.filtroCategoria("nomeCat2"),
+                    "categoria", JOptionPane.DEFAULT_OPTION);
+
+            JOptionPane.showMessageDialog(null, RelatorioEstoqueControl.filtroQuantidade(8, 10),
+                    "quantidade", JOptionPane.DEFAULT_OPTION);
 
 
-            JOptionPane.showMessageDialog(null, RelatorioEstoqueControl.filtroCategoria("nomeCat2"));
+        }
+
+        if (JOptionPane.showInputDialog("ver vendas?").equals("sim")) {
+
+            JOptionPane.showMessageDialog(null, RelatorioVendaControl.todasVendas(),
+                    "todas", JOptionPane.DEFAULT_OPTION);
+
+            JOptionPane.showMessageDialog(null, RelatorioVendaControl.filtroProduto(3),
+                    "produto", JOptionPane.DEFAULT_OPTION);
 
         }
 

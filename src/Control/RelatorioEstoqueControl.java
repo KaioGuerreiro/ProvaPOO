@@ -10,13 +10,9 @@ import java.util.ArrayList;
 public class RelatorioEstoqueControl {
     private static ArrayList<ProdRelatorio> getAllProducts() {
         ArrayList<ProdRelatorio> listaDeProdutos = new ArrayList<ProdRelatorio>();
-        ArrayList<Categoria> listaDeCategoria = new ArrayList<>();
 
-        listaDeCategoria = Dados.getCategorias(); //copia todas as categorias armazenadas em dados
-
-        for (Categoria cat : listaDeCategoria) {
-            String nomeCategoria;
-            nomeCategoria = cat.getNome();
+        for (Categoria cat : Dados.getCategorias()) {
+            String nomeCategoria = cat.getNome();
             for (Produto p : cat.getProdutos()) {
                 if (p.isExcluido()) {
                     continue;
@@ -46,18 +42,11 @@ public class RelatorioEstoqueControl {
 
     public static String filtroCategoria(String nomeCategoria) {
         ArrayList<Object> tempListProdutos = new ArrayList<Object>();
-        ArrayList<ProdRelatorio> listaAllProd = new ArrayList<ProdRelatorio>();
-        ArrayList<ProdRelatorio> listaFiltrada = new ArrayList<ProdRelatorio>();
 
-        listaAllProd = RelatorioEstoqueControl.getAllProducts();
-        for (ProdRelatorio pr : listaAllProd) {
+        for (ProdRelatorio pr : getAllProducts()) {
             if (nomeCategoria.equals(pr.nomeCategoria)) {
-                listaFiltrada.add(pr);
+                tempListProdutos.add(pr);
             }
-        }
-
-        for (ProdRelatorio pr : listaFiltrada) {
-            tempListProdutos.add((Object) pr);
         }
 
         try {
@@ -65,21 +54,22 @@ public class RelatorioEstoqueControl {
         } catch (Exception e) {
             return null;
         }
-
     }
 
     public static String filtroQuantidade(Integer min, Integer max) {
         ArrayList<Object> tempListProdutos = new ArrayList<Object>();
-        ArrayList<ProdRelatorio> listaAllProd = new ArrayList<ProdRelatorio>();
-        ArrayList<ProdRelatorio> listaFiltrada = new ArrayList<ProdRelatorio>();
 
-        listaAllProd = getAllProducts();
-
-        for (ProdRelatorio pr : listaAllProd) {
-
+        for (ProdRelatorio pr : getAllProducts()) {
+            if (pr.qntEstoque >= min && pr.qntEstoque <= max) {
+                tempListProdutos.add(pr);
+            }
         }
 
-        return "Teste";
+        try {
+            return ObjToStringControl.relatorioObj(tempListProdutos);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }
