@@ -1,6 +1,7 @@
 package View;
 
 import Control.GerenciaFornecedor;
+import Control.GerenciarCategoria;
 
 import javax.swing.*;
 
@@ -31,16 +32,15 @@ public class Tela {
     public static int cadastrosCategoria() {
         switch (optCadastrosBTT()) {
             case 0: {
-                JOptionPane.showMessageDialog(null, "criou categoria");
-                //control
+                GerenciarCategoria.adicionar();
                 break;
             }
             case 1: {
-
+                GerenciarCategoria.modificar();
                 break;
             }
             case 2: {
-
+                GerenciarCategoria.excluir();
                 break;
             }
             case 3: {
