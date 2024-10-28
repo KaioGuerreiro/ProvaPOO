@@ -31,7 +31,7 @@ public class ObjToStringControl {
             objects.forEach(pr -> {
                 ProdRelatorio tmpPr = (ProdRelatorio) pr; //Converte os Objects em ProdRelatorio.
 
-                result.append(tmpPr.nomeCategoria + ";" + tmpPr.prodCod + ";" + tmpPr.qntEstoque + ";" + tmpPr.qntMinEstoque +
+                result.append(tmpPr.nomeCategoria + ";" + tmpPr.prodCod + ";" + tmpPr.nomeProd + ";" + tmpPr.qntEstoque + ";" + tmpPr.qntMinEstoque +
                         ";" + tmpPr.preco + ";" + tmpPr.nomeFornecedor + ";" + tmpPr.contatoFornecedor + ";" +
                         (tmpPr.qntEstoque < tmpPr.qntMinEstoque ? "BAIXO ESTOQUE" : null) +
                         "\n");
@@ -40,7 +40,7 @@ public class ObjToStringControl {
         } else if (obj instanceof Venda) {
             /* RESULTADO TXT
                 IDVendedor | nomeVendedor | IDCliente | nomeCliente | destinoCliente | data
-                    cod | nome | preco | qntVendida | subTotal
+                    categoria | cod | nome | preco | qntVendida | subTotal
                     [ . . . ]
                 totalVenda
             */
@@ -62,7 +62,7 @@ public class ObjToStringControl {
                     float subTotal = c.getPreco() * c.getQntVendida();
                     totalVenda += subTotal;
 
-                    strProds.append(c.getCodigo() + ";" + c.getNome() + ";" + c.getPreco() + ";" + c.getQntVendida() + ";" + subTotal + "\n");
+                    strProds.append(c.getCategoria() + ";" + c.getCodigo() + ";" + c.getNome() + ";" + c.getPreco() + ";" + c.getQntVendida() + ";" + subTotal + "\n");
                 }
 
                 result.append(strProds + "" + totalVenda + "\n");

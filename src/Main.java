@@ -4,6 +4,7 @@ import Model.*;
 import Persistence.Dados;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Main {
@@ -27,8 +28,9 @@ public class Main {
         this.excluido = excluido;
         this.fornecedor = fornecedor;
          */
+
         Produto tmpProd = new Produto(1, "produto1", 9, 10, 15.99F, false, forn);
-        Produto tmpProd2 = new Produto(1, "produto2", 11, 10, 15.99F, false, forn);
+        Produto tmpProd2 = new Produto(7, "produto7", 11, 10, 15.99F, false, forn);
 
         ArrayList<Produto> vecProds = new ArrayList<Produto>();
         vecProds.add(tmpProd);
@@ -74,6 +76,7 @@ public class Main {
         ProdutoVenda pV = new ProdutoVenda();
         pV.setCodigo(3);
         pV.setNome("pv1");
+        pV.setCategoria("cate1");
         pV.setPreco(25.0F);
         pV.setFornecedor(forn);
         pV.setQntVendida(10);
@@ -81,6 +84,7 @@ public class Main {
         ProdutoVenda pV2 = new ProdutoVenda();
         pV2.setCodigo(9);
         pV2.setNome("pv18");
+        pV2.setCategoria("cate2");
         pV2.setPreco(30.0F);
         pV2.setFornecedor(forn);
         pV2.setQntVendida(5);
@@ -133,6 +137,9 @@ public class Main {
             JOptionPane.showMessageDialog(null, RelatorioEstoqueControl.todosProdutos(),
                     "todos", JOptionPane.DEFAULT_OPTION);
 
+            JOptionPane.showMessageDialog(null, RelatorioEstoqueControl.filtroProduto(1),
+                    "produto", JOptionPane.DEFAULT_OPTION);
+
             JOptionPane.showMessageDialog(null, RelatorioEstoqueControl.filtroCategoria("nomeCat2"),
                     "categoria", JOptionPane.DEFAULT_OPTION);
 
@@ -149,6 +156,13 @@ public class Main {
 
             JOptionPane.showMessageDialog(null, RelatorioVendaControl.filtroProduto(3),
                     "produto", JOptionPane.DEFAULT_OPTION);
+
+            JOptionPane.showMessageDialog(null, RelatorioVendaControl.filtroData(LocalDate.of(2024, 10, 27), LocalDate.of(2024, 10, 27)),
+                    "data", JOptionPane.DEFAULT_OPTION);
+
+            JOptionPane.showMessageDialog(null, RelatorioVendaControl.filtroVolume(),
+                    "volume??", JOptionPane.DEFAULT_OPTION);
+
 
         }
 

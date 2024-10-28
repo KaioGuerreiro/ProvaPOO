@@ -3,6 +3,7 @@ package Model;
 public class ProdutoVenda {
     private int codigo;
     private String nome;
+    private String categoria;
     private float preco;
     private Fornecedor fornecedor;
     private int qntVendida;
@@ -21,6 +22,14 @@ public class ProdutoVenda {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public float getPreco() {

@@ -56,6 +56,22 @@ public class RelatorioEstoqueControl {
         }
     }
 
+    public static String filtroProduto(Integer prodCod) {
+        ArrayList<Object> tempListProdutos = new ArrayList<Object>();
+
+        for (ProdRelatorio pr : getAllProducts()) {
+            if (prodCod.equals(pr.prodCod)) {
+                tempListProdutos.add(pr);
+            }
+        }
+
+        try {
+            return ObjToStringControl.relatorioObj(tempListProdutos);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public static String filtroQuantidade(Integer min, Integer max) {
         ArrayList<Object> tempListProdutos = new ArrayList<Object>();
 
