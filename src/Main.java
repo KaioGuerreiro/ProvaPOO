@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Main {
-    static void setAll() {
+    static void setTestDatas() {
         Fornecedor forn = new Fornecedor();
         forn.setContato("contForn");
         forn.setNome("nomeForn");
@@ -128,6 +128,9 @@ public class Main {
 
         Dados.setVendas(vendas);
 
+    }
+
+    static void getTestDatas() {
 
         if (JOptionPane.showInputDialog("ver produtos?").equals("sim")) {
 
@@ -162,7 +165,6 @@ public class Main {
 
 
         }
-
     }
 
     static void testInputs() {
@@ -182,11 +184,9 @@ public class Main {
     }
 
 
-    //tirar essas funções daqui.
-
-
     public static void main(String[] args) {
-        //setAll();
+        setTestDatas();
+        //getTestDAtas();
         //testInputs();
 
         boolean running = true;
@@ -194,7 +194,7 @@ public class Main {
 
             switch (Tela.menuPrincipal()) {
                 case 0: {   //Realizar vendas
-
+                    //control
                     break;
                 }
                 case 1: {   //Consultar cadastros
@@ -221,11 +221,11 @@ public class Main {
                 case 2: {   //Relatorios
                     switch (Tela.relatorios()) {
                         case 0: {   //Venda
-
+                            //control
                             break;
                         }
                         case 1: {   //Estoque
-
+                            RelatorioEstoqueControl.gen();
                             break;
                         }
                         case 2: {   //voltar menu principal
@@ -236,7 +236,7 @@ public class Main {
                     break;
                 }
                 case 3: {   //Avisos (somenteADM)
-
+                    //control
                     break;
                 }
                 case 4: {   //sair

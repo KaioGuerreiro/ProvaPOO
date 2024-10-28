@@ -4,7 +4,9 @@ import Model.Categoria;
 import Model.ProdRelatorio;
 import Model.Produto;
 import Persistence.Dados;
+import View.Tela;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class RelatorioEstoqueControl {
@@ -88,4 +90,30 @@ public class RelatorioEstoqueControl {
         }
     }
 
+
+    //no futuro, essa será a unica função publica.
+    public static void gen() {
+        switch (Tela.relatoriosEstoques()) {
+            case 0: {   //Todos
+                JOptionPane.showMessageDialog(null, todosProdutos(),
+                        "todos", JOptionPane.DEFAULT_OPTION);
+                break;
+            }
+            case 1: {   //Categoria
+                JOptionPane.showMessageDialog(null, filtroCategoria("nomeCat2"),
+                        "Categoria", JOptionPane.DEFAULT_OPTION);
+                break;
+            }
+            case 2: {   //Produto
+                JOptionPane.showMessageDialog(null, filtroProduto(1),
+                        "produto", JOptionPane.DEFAULT_OPTION);
+                break;
+            }
+            case 3: {   //Quantidade
+                JOptionPane.showMessageDialog(null, filtroQuantidade(8, 10),
+                        "quantidade", JOptionPane.DEFAULT_OPTION);
+                break;
+            }
+        }
+    }
 }

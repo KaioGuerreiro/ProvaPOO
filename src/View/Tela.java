@@ -30,6 +30,7 @@ public class Tela {
         switch (optCadastrosBTT()) {
             case 0: {
                 JOptionPane.showMessageDialog(null, "criou categoria");
+                //control
                 break;
             }
             case 1: {
@@ -53,6 +54,7 @@ public class Tela {
         switch (optCadastrosBTT()) {
             case 0: {
                 JOptionPane.showMessageDialog(null, "criou produto");
+                //control
                 break;
             }
             case 1: {
@@ -76,6 +78,7 @@ public class Tela {
         switch (optCadastrosBTT()) {
             case 0: {
                 JOptionPane.showMessageDialog(null, "criou fornecedor");
+                //control
                 break;
             }
             case 1: {
@@ -101,5 +104,13 @@ public class Tela {
 
         return JOptionPane.showOptionDialog(null, "", "Relatorios",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, relatBtt, relatBtt[0]);
+    }
+
+
+    public static int relatoriosEstoques() {
+        Object[] tiposRelat = {"Todos", "Por Categoria", "Por Produto", "Por Quantidade"};
+
+        return JOptionPane.showOptionDialog(null, "", "Relatorios",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, tiposRelat, tiposRelat[0]);
     }
 }
