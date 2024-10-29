@@ -122,7 +122,13 @@ public class RelatorioVendaControl {
                 break;
             }
             case 1: {    //produto
-                Integer prod = 3;
+                Integer prod;
+
+                try {
+                    prod = SafeInputControl.sInteger("Filtrar por Produto", "Codigo do produto:");
+                } catch (Exception e) {
+                    break;
+                }
 
                 //JOptionPane.showMessageDialog(null, filtroProduto(prod),
                 //        "Mostando as vendas que tem o produto " + prod, JOptionPane.DEFAULT_OPTION);
@@ -130,16 +136,40 @@ public class RelatorioVendaControl {
                 break;
             }
             case 2: {    //categoria
-                String cat = "cate2";
+                String nomeCat;
+                try {
+                    nomeCat = SafeInputControl.sString("Filtrar por categoria", "Nome da categoria:");
+                } catch (Exception e) {
+                    break;
+                }
 
                 //JOptionPane.showMessageDialog(null, filtroCategoria(cat),
                 //        "Mostando as vendas que tem a categoria " + cat, JOptionPane.DEFAULT_OPTION);
-                resultado = filtroCategoria(cat);
+                resultado = filtroCategoria(nomeCat);
                 break;
             }
             case 3: {    //data
-                LocalDate lcMin = LocalDate.of(2024, 10, 27),
-                        lcMax = LocalDate.of(2024, 10, 28);
+
+                String dataTexto = "2024-10-29";
+                LocalDate lcMin;
+                LocalDate lcMax;
+
+
+                try {
+                    dataTexto = SafeInputControl.sString("Filtrar por Data", "Digite no formato (AAAA-MM-DD)\n\nData inicial:");
+                    lcMin = LocalDate.parse(dataTexto);
+                } catch (Exception e) {
+                    break;
+                }
+
+
+                try {
+                    dataTexto = SafeInputControl.sString("Filtrar por Data", "Digite no formato (AAAA-MM-DD)\n\nData Final:");
+                    lcMax = LocalDate.parse(dataTexto);
+                } catch (Exception e) {
+                    break;
+                }
+
 
                 //JOptionPane.showMessageDialog(null, filtroData(lcMin, lcMax),
                 //        "Mostando as vendas no intervalo de data", JOptionPane.DEFAULT_OPTION);

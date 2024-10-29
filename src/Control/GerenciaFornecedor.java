@@ -100,7 +100,7 @@ public class GerenciaFornecedor {
         }
     }
 
-    public static int excluir() {
+    public static int listagem() {
         String temp = "";
 
         for (Fornecedor f : Dados.getFornecedores()) {

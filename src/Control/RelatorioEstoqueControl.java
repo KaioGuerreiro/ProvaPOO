@@ -120,7 +120,7 @@ public class RelatorioEstoqueControl {
             case 2: {   //Produto
                 Integer prodCod;
                 try {
-                    prodCod = SafeInputControl.sInteger("Filtrar por Produto", "Codigo (ou nome posteriormente) do produto:");
+                    prodCod = SafeInputControl.sInteger("Filtrar por Produto", "Codigo do produto:");
                 } catch (Exception e) {
                     break;
                 }

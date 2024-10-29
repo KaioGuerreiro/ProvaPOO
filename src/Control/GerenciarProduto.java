@@ -178,7 +178,94 @@ public class GerenciarProduto {
         JOptionPane.showMessageDialog(null, "Modificação do produto cancelada!");
     }
 
+    public static void ajustarEstoque() {
+        Integer idCod = null;
+        Integer adjEst = null;
+
+        while (true) {
+
+            try {
+                if (idCod == null)
+                    idCod = SafeInputControl.sInteger("Ajuste de Estoque", "Codigo do produto à ajustar:");
+            } catch (Exception e) {
+                break;
+            }
+
+            int[] found = encontrar(idCod);
+            if (found[0] < 0 || found[1] < 0) {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado. Digite outro");
+                idCod = null;
+                continue;
+            }
+
+            try {
+                if (adjEst == null)
+                    adjEst = SafeInputControl.sInteger("Ajuste de Estoque", "Ajustar o estoque em: (pode usar valor negativo)");
+            } catch (Exception e) {
+                break;
+            }
+
+
+            Produto act = Dados.getCategorias().get(found[0]).getProdutos().get(found[1]);
+
+            if (act.getQuantidadeEstoque() + adjEst < 0) {
+                JOptionPane.showMessageDialog(null, "Esse ajuste ficará negativo! Negado!");
+                adjEst = null;
+                continue;
+            }
+
+            act.setQuantidadeEstoque(act.getQuantidadeEstoque() + adjEst);
+            JOptionPane.showMessageDialog(null, "Ajuste realizado!");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(null, "Nenhum ajuste realizado!");
+    }
+
+
     public static void excluir() {
+        Integer idCod = null;
+
+        while (true) {
+            try {
+                if (idCod == null) idCod = SafeInputControl.sInteger("Realizando Venda", "Digite o ID do produto:");
+            } catch (Exception e) {
+                break;
+            }
+
+            int[] indexProd = GerenciarProduto.encontrar(idCod);
+            if (indexProd[0] < 0 || indexProd[1] < 0) {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado, digite outro.");
+                idCod = null;
+                continue;
+            }
+
+            Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[1]).setExcluido(true);
+
+            JOptionPane.showMessageDialog(null, "Produto excluido");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(null, "Nenhum produto excluido");
+    }
+
+    public static void listagem() {
+        String res = "";
+        for (Categoria c : Dados.getCategorias()) {
+            String nomeCat = c.getNome();
+            for (Produto p : c.getProdutos()) {
+                res += "Categoria: " + nomeCat +
+                        " cod: " + p.getCodigo() +
+                        " Nome: " + p.getNome() +
+                        " Min: " + p.getQuantidadeMin() +
+                        " Act: " + p.getQuantidadeEstoque() +
+                        " Preço: " + p.getPreco() +
+                        " Excluido: " + p.isExcluido() + "\n";
+            }
+        }
+
+
+        JOptionPane.showMessageDialog(null, res);
 
     }
 }

@@ -1,9 +1,7 @@
 package View;
 
-import Control.GerenciaFornecedor;
-import Control.GerenciarCategoria;
-import Control.GerenciarPessoa;
-import Control.GerenciarProduto;
+import Control.*;
+import Model.Administrador;
 import Model.Vendedor;
 import Persistence.Dados;
 
@@ -35,7 +33,7 @@ public class Tela {
     }
 
     private static int optCadastrosBTT() {
-        Object[] optCadstroBtt = {"Criar", "Modificar", "Excluir", "voltar"};
+        Object[] optCadstroBtt = {"Criar", "Modificar", "Listagem", "voltar"};
 
         return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
@@ -53,7 +51,7 @@ public class Tela {
                 break;
             }
             case 2: {
-                GerenciarCategoria.excluir();
+                GerenciarCategoria.listagem();
                 break;
             }
             case 3: {
@@ -65,8 +63,16 @@ public class Tela {
         return 0;
     }
 
+    private static int optCadsProdutoBTT() {
+        Object[] optCadstroBtt = {"Criar", "Modificar", "Ajustar Estoque", "Excluir", "Listagem", "voltar"};
+
+        return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+
+    }
+
     public static int cadastrosProduto() {
-        switch (optCadastrosBTT()) {
+        switch (optCadsProdutoBTT()) {
             case 0: {
                 GerenciarProduto.adicionar();
                 break;
@@ -76,11 +82,15 @@ public class Tela {
                 break;
             }
             case 2: {
-
+                GerenciarProduto.ajustarEstoque();
                 break;
             }
             case 3: {
-
+                GerenciarProduto.excluir();
+                break;
+            }
+            case 4: {
+                GerenciarProduto.listagem();
                 break;
             }
         }
@@ -99,7 +109,7 @@ public class Tela {
                 break;
             }
             case 2: {
-                GerenciaFornecedor.excluir();
+                GerenciaFornecedor.listagem();
                 break;
             }
             case 3: {
@@ -112,24 +122,38 @@ public class Tela {
     }
 
     public static int administrativo() {
-        Object[] admBtts = {"Avisos", "Cadastrar Usuario", "voltar"};
+        if (Dados.getPessoas().get(Dados.getUserLogged()) instanceof Administrador) {
+            Object[] admBtts = {"Avisos", "Cadastrar Usuario", "voltar"};
 
-        return JOptionPane.showOptionDialog(null, "", "Administração",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, admBtts, admBtts[0]);
+            return JOptionPane.showOptionDialog(null, "", "Administração",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, admBtts, admBtts[0]);
+        } else {
+            JOptionPane.showMessageDialog(null, "Disponível somente para Administradores!");
+            return -1;
+        }
+    }
+
+
+    private static int optCadstrAvisosBTT() {
+        Object[] optCadstroBtt = {"Ver Avisos ativos", "Resolver Avisos Ativos", "Listagem", "voltar"};
+
+        return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
+
     }
 
     public static int avisos() {
-        switch (optCadastrosBTT()) {
+        switch (optCadstrAvisosBTT()) {
             case 0: {
-                GerenciarPessoa.adicionar();
+                GerenciarAlertas.verActives();
                 break;
             }
             case 1: {
-                GerenciarPessoa.modificar();
+                GerenciarAlertas.resolver();
                 break;
             }
             case 2: {
-
+                GerenciarAlertas.listagem();
                 break;
             }
             case 3: {
@@ -152,7 +176,7 @@ public class Tela {
                 break;
             }
             case 2: {
-                GerenciarPessoa.excluir();
+                GerenciarPessoa.listagem();
                 break;
             }
             case 3: {

@@ -5,10 +5,10 @@ public class Alerta {
     private String dados;
     private boolean resolvido;
 
-    public Alerta(String descricao, String dados, boolean resolvido) {
+    public Alerta(String descricao, String dados) {
         this.descricao = descricao;
         this.dados = dados;
-        this.resolvido = resolvido;
+        this.resolvido = false;
     }
 
     public String getDescricao() {

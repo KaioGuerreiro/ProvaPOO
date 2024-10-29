@@ -25,7 +25,12 @@ public class GerenciarVenda {
                 idCod = null;
                 continue;
             }
-            ;
+
+            if (Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[0]).isExcluido()) {
+                JOptionPane.showMessageDialog(null, "Este produto encontra-se excluido, digite outro.");
+                idCod = null;
+                continue;
+            }
 
             String nomeProd = Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[1]).getNome();
             String nomeCat = Dados.getCategorias().get(indexProd[0]).getNome();
@@ -134,6 +139,7 @@ public class GerenciarVenda {
                         //Adiciona um aviso de baixo estoque pros ADM, a variável booleana "excluido" é usada pra não adicionar varios avisos pro mesmo produto
                         if (!p.isExcluido() && p.getQuantidadeEstoque() < p.getQuantidadeMin()) {
                             JOptionPane.showMessageDialog(null, "Atenção!\nProduto chegou em sua quantidade minima");
+                            GerenciarAlertas.adicionar("Baixo estoque", pv.getCodigo() + "|" + pv.getNome());
                             p.setExcluido(true);
                         }
 

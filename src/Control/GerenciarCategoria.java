@@ -47,7 +47,7 @@ public class GerenciarCategoria {
             JOptionPane.showMessageDialog(null, "Nenhuma categoria adicionada");
             return;
         }
-                
+
         Dados.getCategorias().add(tmpCat);
         JOptionPane.showMessageDialog(null, "Categoria adicionada!");
     }
@@ -89,7 +89,7 @@ public class GerenciarCategoria {
         }
     }
 
-    public static void excluir() {
+    public static void listagem() {
         String cats = "";
 
         for (Categoria c : Dados.getCategorias()) {

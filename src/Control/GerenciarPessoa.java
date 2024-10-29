@@ -165,7 +165,7 @@ public class GerenciarPessoa {
         JOptionPane.showMessageDialog(null, "Mofificação cancelada");
     }
 
-    public static void excluir() {
+    public static void listagem() {
         String str = "";
         for (Pessoa p : Dados.getPessoas()) {
             str += "Nome: " + p.getNome() + " ID: " + p.getId() + " Cont: " + p.getContato();
