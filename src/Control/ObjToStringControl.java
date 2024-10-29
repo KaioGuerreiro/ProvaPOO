@@ -33,7 +33,7 @@ public class ObjToStringControl {
 
                 result.append(tmpPr.nomeCategoria + ";" + tmpPr.prodCod + ";" + tmpPr.nomeProd + ";" + tmpPr.qntEstoque + ";" + tmpPr.qntMinEstoque +
                         ";" + tmpPr.preco + ";" + tmpPr.nomeFornecedor + ";" + tmpPr.contatoFornecedor + ";" +
-                        (tmpPr.qntEstoque < tmpPr.qntMinEstoque ? "BAIXO ESTOQUE" : null) +
+                        (tmpPr.qntEstoque < tmpPr.qntMinEstoque ? "Sim" : "Não") +
                         "\n");
 
             });

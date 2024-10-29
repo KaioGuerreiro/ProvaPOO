@@ -4,9 +4,8 @@ import Model.Categoria;
 import Model.ProdRelatorio;
 import Model.Produto;
 import Persistence.Dados;
-import View.Tela;
+import View.Relatorios;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class RelatorioEstoqueControl {
@@ -93,10 +92,16 @@ public class RelatorioEstoqueControl {
 
     //no futuro, essa será a unica função publica.
     public static void gen() {
-        switch (Tela.relatoriosEstoques()) {
+
+        String cabecalho = "Nome Categoria;Codigo Produto;Nome Produto;Qnt em Estoque;Qnt Minima;Valor Unitario;Nome Fornecedor;Contato Fornecedor;Baixo Estoque";
+        String resultado = null;
+
+        switch (Relatorios.tipoEstoque()) {
+
             case 0: {   //Todos
-                JOptionPane.showMessageDialog(null, todosProdutos(),
-                        "Mostrando todos os produtos", JOptionPane.DEFAULT_OPTION);
+                //JOptionPane.showMessageDialog(null, todosProdutos(),
+                //        "Mostrando todos os produtos", JOptionPane.DEFAULT_OPTION);
+                resultado = todosProdutos();
                 break;
             }
             case 1: {   //Categoria
@@ -107,8 +112,9 @@ public class RelatorioEstoqueControl {
                     break;
                 }
 
-                JOptionPane.showMessageDialog(null, filtroCategoria(nomeCat),
-                        "Mostrando os produtos pertencentes à categoria " + nomeCat, JOptionPane.DEFAULT_OPTION);
+                //JOptionPane.showMessageDialog(null, filtroCategoria(nomeCat),
+                //        "Mostrando os produtos pertencentes à categoria " + nomeCat, JOptionPane.DEFAULT_OPTION);
+                resultado = filtroCategoria(nomeCat);
                 break;
             }
             case 2: {   //Produto
@@ -119,8 +125,9 @@ public class RelatorioEstoqueControl {
                     break;
                 }
 
-                JOptionPane.showMessageDialog(null, filtroProduto(prodCod),
-                        "Mostrando o produto de codigo " + prodCod, JOptionPane.DEFAULT_OPTION);
+                //JOptionPane.showMessageDialog(null, filtroProduto(prodCod),
+                //        "Mostrando o produto de codigo " + prodCod, JOptionPane.DEFAULT_OPTION);
+                resultado = filtroProduto(prodCod);
                 break;
             }
             case 3: {   //Quantidade
@@ -138,10 +145,14 @@ public class RelatorioEstoqueControl {
                     break;
                 }
 
-                JOptionPane.showMessageDialog(null, filtroQuantidade(min, max),
-                        "Mostrando os produtos com estoque entre " + min + " e " + max, JOptionPane.DEFAULT_OPTION);
+                //JOptionPane.showMessageDialog(null, filtroQuantidade(min, max),
+                //        "Mostrando os produtos com estoque entre " + min + " e " + max, JOptionPane.DEFAULT_OPTION);
+                resultado = filtroQuantidade(min, max);
                 break;
             }
         }
+
+        Relatorios.imprimir(cabecalho, resultado);
+
     }
 }

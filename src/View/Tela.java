@@ -4,6 +4,7 @@ import Control.GerenciaFornecedor;
 import Control.GerenciarCategoria;
 import Control.GerenciarPessoa;
 import Control.GerenciarProduto;
+import Model.Vendedor;
 import Persistence.Dados;
 
 import javax.swing.*;
@@ -19,7 +20,10 @@ public class Tela {
     public static int menuPrincipal() {
         Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Administrativo", "sair"};
 
-        return JOptionPane.showOptionDialog(null, "Bem vindo, " + Dados.getPessoas().get(Dados.getUserLogged()).getNome(), "Menu Principal",
+        return JOptionPane.showOptionDialog(null, "Bem vindo, " + Dados.getPessoas().get(Dados.getUserLogged()).getNome() +
+                        ((Dados.getPessoas().get(Dados.getUserLogged()) instanceof Vendedor vend) ?
+                                "\nVocê já realizou: " + vend.getVendasRealizadas() + " vendas" : ""),
+                "Menu Principal",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, mainBtt, mainBtt[0]);
     }
 
@@ -105,29 +109,6 @@ public class Tela {
         }
 
         return 0;
-    }
-
-
-    public static int relatorios() {
-        Object[] relatBtt = {"Vendas", "Estoque", "voltar"};
-
-        return JOptionPane.showOptionDialog(null, "", "Relatorios",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, relatBtt, relatBtt[0]);
-    }
-
-
-    public static int relatoriosEstoques() {
-        Object[] tiposRelat = {"Todos", "Por Categoria", "Por Produto", "Por Quantidade"};
-
-        return JOptionPane.showOptionDialog(null, "", "Relatorios",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, tiposRelat, tiposRelat[0]);
-    }
-
-    public static int relatoriosVendas() {
-        Object[] tiposRelat = {"Todos", "Por Produto", "Por Categoria", "Por Data", "Por Volume"};
-
-        return JOptionPane.showOptionDialog(null, "", "Tipos de relatorios de venda",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, tiposRelat, tiposRelat[0]);
     }
 
     public static int administrativo() {

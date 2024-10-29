@@ -4,6 +4,7 @@ import Control.RelatorioEstoqueControl;
 import Control.RelatorioVendaControl;
 import Model.*;
 import Persistence.Dados;
+import View.Relatorios;
 import View.Tela;
 
 import javax.swing.*;
@@ -265,7 +266,7 @@ public class Main {
                     break;
                 }
                 case 2: {   //Relatorios
-                    switch (Tela.relatorios()) {
+                    switch (Relatorios.tipos()) {
                         case 0: {   //Venda
                             RelatorioVendaControl.gen();
                             break;

@@ -3,7 +3,7 @@ package Control;
 import Model.ProdutoVenda;
 import Model.Venda;
 import Persistence.Dados;
-import View.Tela;
+import View.Relatorios;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -113,42 +113,48 @@ public class RelatorioVendaControl {
     }
 
     public static void gen() {
-        switch (Tela.relatoriosVendas()) {
+        String resultado = null;
+        switch (Relatorios.tipoVendas()) {
             case 0: {    //todos
-                JOptionPane.showMessageDialog(null, todasVendas(),
-                        "Mostrando todas as vendas", JOptionPane.DEFAULT_OPTION);
+                //JOptionPane.showMessageDialog(null, todasVendas(),
+                //        "Mostrando todas as vendas", JOptionPane.DEFAULT_OPTION);
+                resultado = todasVendas();
                 break;
             }
             case 1: {    //produto
                 Integer prod = 3;
 
-                JOptionPane.showMessageDialog(null, filtroProduto(prod),
-                        "Mostando as vendas que tem o produto " + prod, JOptionPane.DEFAULT_OPTION);
+                //JOptionPane.showMessageDialog(null, filtroProduto(prod),
+                //        "Mostando as vendas que tem o produto " + prod, JOptionPane.DEFAULT_OPTION);
+                resultado = filtroProduto(prod);
                 break;
             }
             case 2: {    //categoria
                 String cat = "cate2";
 
-                JOptionPane.showMessageDialog(null, filtroCategoria(cat),
-                        "Mostando as vendas que tem a categoria " + cat, JOptionPane.DEFAULT_OPTION);
-
+                //JOptionPane.showMessageDialog(null, filtroCategoria(cat),
+                //        "Mostando as vendas que tem a categoria " + cat, JOptionPane.DEFAULT_OPTION);
+                resultado = filtroCategoria(cat);
                 break;
             }
             case 3: {    //data
                 LocalDate lcMin = LocalDate.of(2024, 10, 27),
                         lcMax = LocalDate.of(2024, 10, 28);
 
-                JOptionPane.showMessageDialog(null, filtroData(lcMin, lcMax),
-                        "Mostando as vendas no intervalo de data", JOptionPane.DEFAULT_OPTION);
-
+                //JOptionPane.showMessageDialog(null, filtroData(lcMin, lcMax),
+                //        "Mostando as vendas no intervalo de data", JOptionPane.DEFAULT_OPTION);
+                resultado = filtroData(lcMin, lcMax);
                 break;
             }
             case 4: {    //volume
-                JOptionPane.showMessageDialog(null, filtroVolume(),
-                        "volume??", JOptionPane.DEFAULT_OPTION);
+                //JOptionPane.showMessageDialog(null, filtroVolume(),
+                //        "volume??", JOptionPane.DEFAULT_OPTION);
+                resultado = filtroVolume();
                 break;
             }
         }
+
+        Relatorios.imprimir(null, resultado);
 
     }
 }
