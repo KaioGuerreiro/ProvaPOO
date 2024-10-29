@@ -22,6 +22,7 @@ public class GerenciarVenda {
             int[] indexProd = GerenciarProduto.encontrar(idCod);
             if (indexProd[0] < 0 || indexProd[1] < 0) {
                 JOptionPane.showMessageDialog(null, "Produto não encontrado, digite outro.");
+                idCod = null;
                 continue;
             }
             ;
@@ -81,6 +82,7 @@ public class GerenciarVenda {
                 tmpVenda.setCliente(cli);
             } else {
                 JOptionPane.showMessageDialog(null, "O cliente selecionado não é de fato um cliente! digite outro.");
+                idClient = null;
                 continue;
             }
 
@@ -93,7 +95,10 @@ public class GerenciarVenda {
             }
 
             if (tmpCarrinho.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Carrinho não pode ser vazio! Digite os produtos.");
+                if (JOptionPane.showConfirmDialog(null, "Carrinho não pode ser vazio! Digitar os produtos?", "",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                    return null;
+                }
                 continue;
             }
 

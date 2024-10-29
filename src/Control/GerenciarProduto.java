@@ -39,6 +39,8 @@ public class GerenciarProduto {
         //int codigo, String nome, int quantidadeEstoque, int quantidadeMin, float preco, boolean excluido, Fornecedor fornecedor
         Integer codi = null;
         String forn = null;
+        String nome = null;
+        Float preco = null;
 
         while (true) {
             try {
@@ -50,12 +52,12 @@ public class GerenciarProduto {
             int[] found = encontrar(codi);
             if (found[0] >= 0 || found[1] >= 0) {
                 JOptionPane.showMessageDialog(null, "Esse produto já existe! digite outro.");
+                codi = null;
                 continue;
             }
 
-            String nome;
             try {
-                nome = SafeInputControl.sString("Cadastro de Produtos", "Nome do produto:");
+                if (nome == null) nome = SafeInputControl.sString("Cadastro de Produtos", "Nome do produto:");
             } catch (Exception e) {
                 return null;
             }
@@ -63,10 +65,10 @@ public class GerenciarProduto {
             Integer qntEst = 1;
             Integer qntMinEst = 10;
             boolean excl = false;
-            Float preco;
 
             try {
-                preco = SafeInputControl.sFloat("Cadastro de Produtos", "Valor unitário do produto:");
+                if (preco == null)
+                    preco = SafeInputControl.sFloat("Cadastro de Produtos", "Valor unitário do produto:");
             } catch (Exception e) {
                 return null;
             }
