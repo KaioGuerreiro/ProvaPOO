@@ -57,9 +57,7 @@ public class GerenciaFornecedor {
             return;
         }
 
-        ArrayList<Fornecedor> tmpArr = Dados.getFornecedores();
-        tmpArr.add(tmpF);
-        Dados.setFornecedores(tmpArr);
+        Dados.getFornecedores().add(tmpF);
         JOptionPane.showMessageDialog(null, "Fornecedor adicionado!");
     }
 
@@ -91,13 +89,9 @@ public class GerenciaFornecedor {
                     continue;
                 }
 
-                ArrayList<Fornecedor> tmpArr = Dados.getFornecedores();
-                tmpArr.get(found).setNome(novoNome);
-
-                Dados.setFornecedores(tmpArr);
+                Dados.getFornecedores().get(found).setNome(novoNome);
 
                 JOptionPane.showMessageDialog(null, "Fornecedor alterado!");
-
                 return;
             } else {
                 JOptionPane.showMessageDialog(null, "fornecedor não encontrado");

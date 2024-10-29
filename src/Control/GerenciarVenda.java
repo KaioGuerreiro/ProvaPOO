@@ -115,11 +115,9 @@ public class GerenciarVenda {
             return;
         }
 
-        ArrayList<Venda> vendas = Dados.getVendas();
-        vendas.add(tmpVenda);
+        //verifica estoque...
 
-        Dados.setVendas(vendas);
-
+        Dados.getVendas().add(tmpVenda);
         JOptionPane.showMessageDialog(null, "Venda adicionada!");
     }
 }

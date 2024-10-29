@@ -101,11 +101,7 @@ public class GerenciarPessoa {
         Pessoa p = criar();
         if (p == null) return;
 
-        ArrayList<Pessoa> tmpPpl = Dados.getPessoas();
-        tmpPpl.add(p);
-
-        Dados.setPessoas(tmpPpl);
-
+        Dados.getPessoas().add(p);
         JOptionPane.showMessageDialog(null, "Pessoa adicionada!");
     }
 
@@ -126,45 +122,42 @@ public class GerenciarPessoa {
                 continue;
             }
 
-            ArrayList<Pessoa> pplArr = Dados.getPessoas();
-            Pessoa p = pplArr.get(indexP); //Pessoa que o usuario selecionou;
+            Pessoa pplMod = Dados.getPessoas().get(indexP); //Pessoa que o usuario selecionou (é uma referência da memoria);
 
             String nvNome;
             try {
                 nvNome = SafeInputControl.sString("Modificando Pessoa", "Novo nome (vazio cancela): ");
             } catch (Exception e) {
-                nvNome = p.getNome();
+                nvNome = pplMod.getNome();
             }
 
-            p.setNome(nvNome);
-
-            if (p instanceof Cliente tmp) {
+            if (pplMod instanceof Cliente cli) {
 
                 String nvDest;
                 try {
                     nvDest = SafeInputControl.sString("Modificando cliente", "Novo destino: ");
                 } catch (Exception e) {
-                    return;
+                    break;
                 }
 
-                tmp.setDestino(nvDest);
+                cli.setDestino(nvDest);
+            } else if (pplMod instanceof Vendedor vend) {
 
-                pplArr.set(indexP, tmp);
-            } else if (p instanceof Administrador adm) {
+            } else if (pplMod instanceof Administrador adm) {
 
                 String nvCfg;
                 try {
                     nvCfg = SafeInputControl.sString("Modificando Administrador", "Ele pode gerenciar usuarios?: ");
                 } catch (Exception e) {
-                    return;
+                    break;
                 }
 
                 adm.setCanGerUser(nvCfg.equals("sim"));
-
-                pplArr.set(indexP, adm);
+            } else {
+                break;
             }
 
-            Dados.setPessoas(pplArr);
+            pplMod.setNome(nvNome);
             JOptionPane.showMessageDialog(null, "Pessoa modificada!");
             return;
         }
@@ -187,6 +180,4 @@ public class GerenciarPessoa {
         JOptionPane.showMessageDialog(null, str);
 
     }
-
-
 }

@@ -47,13 +47,9 @@ public class GerenciarCategoria {
             JOptionPane.showMessageDialog(null, "Nenhuma categoria adicionada");
             return;
         }
-
-        ArrayList<Categoria> tmpArr = Dados.getCategorias();
-        tmpArr.add(tmpCat);
-
-        Dados.setCategorias(tmpArr);
+                
+        Dados.getCategorias().add(tmpCat);
         JOptionPane.showMessageDialog(null, "Categoria adicionada!");
-
     }
 
     public static void modificar() {

@@ -68,7 +68,7 @@ public class Tela {
                 break;
             }
             case 1: {
-
+                GerenciarProduto.modificar();
                 break;
             }
             case 2: {

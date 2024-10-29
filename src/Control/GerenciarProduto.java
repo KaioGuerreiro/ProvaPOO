@@ -20,7 +20,6 @@ public class GerenciarProduto {
     public static int[] encontrar(Integer codigo) {
         ArrayList<Categoria> catArr = Dados.getCategorias();
 
-
         for (int i = 0; i < catArr.size(); i++) {
             ArrayList<Produto> prodArr = catArr.get(i).getProdutos();
 
@@ -29,7 +28,6 @@ public class GerenciarProduto {
                     return new int[]{i, ii};
                 }
             }
-
         }
 
         return new int[]{-1, -1};
@@ -99,7 +97,7 @@ public class GerenciarProduto {
             try {
                 if (categ == null) categ = SafeInputControl.sString("Cadastro de Produtos", "Nome da categoria");
             } catch (Exception e) {
-                return;
+                break;
             }
 
             int indexCateg = GerenciarCategoria.encontrar(categ);
@@ -110,24 +108,72 @@ public class GerenciarProduto {
             }
 
             Produto tmpProd = criar();
-            if (tmpProd == null) return;
+            if (tmpProd == null) break;
 
             //Necessário modificar o vetor de produtos da categoria que o usuario escolheu.
 
-            Categoria tmpCate = Dados.getCategorias().get(indexCateg);  //Categoria que o usuario digitou.
-
-            ArrayList<Produto> tmpProds = tmpCate.getProdutos();    //Vetor de produtos da categoria que o usuario escolheu.
-            tmpProds.add(tmpProd);  //adicionando o novo produto à esse vetor.
-
-            tmpCate.setProdutos(tmpProds);  //Devolvendo o vetor de produtos com o novo produto à categoria.
-
-            ArrayList<Categoria> allCategorias = Dados.getCategorias(); //Fazendo uma cópia do vetor de categoria princiapal.
-            allCategorias.set(indexCateg, tmpCate); //Modificando a categoria (e consequentemente a dicionando o novo produto).
-
-            Dados.setCategorias(allCategorias); //Devolvendo o novo array de categorias ao Dados, já com o novo produto.
-
+            Dados.getCategorias().get(indexCateg).getProdutos().add(tmpProd);
             JOptionPane.showMessageDialog(null, "Produto adicionado!");
             return;
         }
+
+        JOptionPane.showMessageDialog(null, "Nenhum produto adicionado!");
+    }
+
+    public static void modificar() {
+        Integer idProd = null;
+        String nomeForn = null;
+        String novoNome = null;
+
+
+        while (true) {
+
+            try {
+                if (idProd == null)
+                    idProd = SafeInputControl.sInteger("Cadastro de Produto", "Id do produto à alterar:");
+            } catch (Exception e) {
+                break;
+            }
+
+            int[] prodIndex = encontrar(idProd);
+            if (prodIndex[0] < 0 || prodIndex[1] < 0) {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado! digite outro.");
+                idProd = null;
+                continue;
+            }
+
+            try {
+                if (novoNome == null) novoNome = SafeInputControl.sString("Cadastro de Produto", "Novo nome:");
+            } catch (Exception e) {
+                break;
+            }
+
+            try {
+                if (nomeForn == null)
+                    nomeForn = SafeInputControl.sString("Cadastro de Produto", "Digite o nome do fornecedor à alterar:");
+            } catch (Exception e) {
+                break;
+            }
+
+            int fornIndex = GerenciaFornecedor.encontrar(nomeForn);
+            if (fornIndex < 0) {
+                JOptionPane.showMessageDialog(null, "Fornecedor não encontrado! digite outro.");
+                nomeForn = null;
+                continue;
+            }
+
+
+            Dados.getCategorias().get(prodIndex[0]).getProdutos().get(prodIndex[1]).setNome(novoNome);
+            Dados.getCategorias().get(prodIndex[0]).getProdutos().get(prodIndex[1]).setFornecedor(Dados.getFornecedores().get(fornIndex));
+
+            JOptionPane.showMessageDialog(null, "Produto modificado!);");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(null, "Modificação do produto cancelada!");
+    }
+
+    public static void excluir() {
+
     }
 }
