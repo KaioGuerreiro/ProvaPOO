@@ -67,6 +67,11 @@ public class GerenciarProduto {
             try {
                 if (preco == null)
                     preco = SafeInputControl.sFloat("Cadastro de Produtos", "Valor unitário do produto:");
+                if (preco <= 0) {
+                    JOptionPane.showMessageDialog(null, "O valor do produto precisa ser maior que 0.");
+                    preco = null;
+                    continue;
+                }
             } catch (Exception e) {
                 return null;
             }

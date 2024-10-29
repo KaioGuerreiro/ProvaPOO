@@ -35,6 +35,11 @@ public class GerenciarVenda {
             try {
                 if (qntVend == null)
                     qntVend = SafeInputControl.sInteger("Realizando Venda", "Quantos produtos será vendido?");
+                if (qntVend < 1) {
+                    JOptionPane.showMessageDialog(null, "Você precisa vender no minimo 1 produto.");
+                    qntVend = null;
+                    continue;
+                }
             } catch (Exception e) {
                 return null;
             }
