@@ -60,7 +60,7 @@ public class GerenciarProduto {
                 return null;
             }
 
-            Integer qntEst = 1;
+            Integer qntEst = 15;
             Integer qntMinEst = 10;
             boolean excl = false;
 

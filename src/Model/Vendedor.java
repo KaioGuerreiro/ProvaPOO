@@ -10,4 +10,8 @@ public class Vendedor extends Pessoa {
     public int getVendasRealizadas() {
         return vendasRealizadas;
     }
+
+    public void setVendasRealizadas(int vendasRealizadas) {
+        this.vendasRealizadas = vendasRealizadas;
+    }
 }

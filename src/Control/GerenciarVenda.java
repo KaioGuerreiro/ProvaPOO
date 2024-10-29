@@ -86,13 +86,61 @@ public class GerenciarVenda {
                 continue;
             }
 
+
+            //Criando uma copia de todos os produtos cadastrados no sistema (para controlar o estoque individual)
+            ArrayList<Produto> tmpArrProdutos = new ArrayList<>();
+            for (Categoria c : Dados.getCategorias()) {
+                for (Produto p : c.getProdutos()) {
+                    int codig = p.getCodigo();
+                    int qntEsto = p.getQuantidadeEstoque();
+                    int qntMini = p.getQuantidadeMin();
+
+                    //a copia só precisa dessas três informações, o resto nunca será utilizado.
+                    Produto copyP = new Produto(codig, null, qntEsto, qntMini, 0, false, null);
+
+                    tmpArrProdutos.add(copyP);
+                }
+            }
+
+
+            //Essa parte é pra montar o carrinho da venda. Ele verifica o estoque sempre que o usuario adiciona um produto.
             ArrayList<ProdutoVenda> tmpCarrinho = new ArrayList<>();
             while (true) {
                 ProdutoVenda pv = criarPV();
                 if (pv == null) break;
 
-                tmpCarrinho.add(pv);
+                boolean canAdd = true;
+
+
+                //Parte que verifica o estoque
+                for (Produto p : tmpArrProdutos) {
+                    if (p.getCodigo() == pv.getCodigo()) {
+                        int emEst = p.getQuantidadeEstoque();
+                        int tentVend = pv.getQntVendida();
+                        int res = emEst - tentVend;
+                        if (res < 0) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Você está tentando vender mais do que há no estoque!\n" +
+                                            "Estoque: " + emEst +
+                                            "\nTentando vender: " + tentVend + "\nEsse produto não será adicionado ao carrinho!");
+                            canAdd = false;
+                        } else p.setQuantidadeEstoque(res);
+
+                        //Adiciona um aviso de baixo estoque pros ADM, a variável booleana "excluido" é usada pra não adicionar varios avisos pro mesmo produto
+                        if (!p.isExcluido() && p.getQuantidadeEstoque() < p.getQuantidadeMin()) {
+                            JOptionPane.showMessageDialog(null, "Atenção!\nProduto chegou em sua quantidade minima");
+                            p.setExcluido(true);
+                        }
+
+                        //Partir pra adição do próximo produto do carrinho
+                        break;
+                    }
+                }
+
+
+                if (canAdd) tmpCarrinho.add(pv);
             }
+
 
             if (tmpCarrinho.isEmpty()) {
                 if (JOptionPane.showConfirmDialog(null, "Carrinho não pode ser vazio! Digitar os produtos?", "",
@@ -115,7 +163,27 @@ public class GerenciarVenda {
             return;
         }
 
-        //verifica estoque...
+
+        //Atualizando os novos valores de estoque de cada produto utilizado.
+        for (ProdutoVenda pv : tmpVenda.getCarrinho()) {
+            for (Categoria c : Dados.getCategorias()) {
+                boolean found = false;
+                for (Produto p : c.getProdutos()) {
+                    if (pv.getCodigo() == p.getCodigo()) {
+                        p.setQuantidadeEstoque(p.getQuantidadeEstoque() - pv.getQntVendida());
+                        found = true;
+                        break;
+                    }
+                }
+                //Se o produto foi encontrado, não tem porque continuar olhando dentro das categorias.
+                if (found) break;
+            }
+        }
+
+
+        if (Dados.getPessoas().get(Dados.getUserLogged()) instanceof Vendedor vend) {
+            vend.setVendasRealizadas(vend.getVendasRealizadas() + 1);
+        }
 
         Dados.getVendas().add(tmpVenda);
         JOptionPane.showMessageDialog(null, "Venda adicionada!");
