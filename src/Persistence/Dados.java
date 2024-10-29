@@ -13,6 +13,7 @@ public class Dados {
     private static ArrayList<Fornecedor> fornecedores = new ArrayList<>();
 
     public Dados() {
+        userLogged = -1;
     }
 
     public static int getUserLogged() {

@@ -186,14 +186,32 @@ public class Main {
 
     private static void addAdmUser() {
         Administrador adm = new Administrador();
-
         adm.setNome("ADMNISTRADOR");
         adm.setContato("ADM@ADM.COM");
         adm.setCanGerUser(true);
         adm.setId(0);
 
+        Vendedor vend = new Vendedor();
+        vend.setNome("IVAN LUIZ");
+        vend.setContato("ivan@luiz.COM");
+        vend.setId(2);
+
+        Vendedor vend2 = new Vendedor();
+        vend2.setNome("Kaio guerreiro");
+        vend2.setContato("kaio@guerreiro.COM");
+        vend2.setId(3);
+
+        Cliente cli = new Cliente();
+        cli.setNome("matheus");
+        cli.setContato("matheus@iori.COM");
+        cli.setId(1);
+        cli.setDestino("hauseOfDragon");
+
         ArrayList<Pessoa> pps = Dados.getPessoas();
         pps.add(adm);
+        pps.add(vend);
+        pps.add(vend2);
+        pps.add(cli);
 
         Dados.setPessoas(pps);
     }
@@ -205,16 +223,19 @@ public class Main {
         //testInputs();
 
         addAdmUser();
+        Dados.setUserLogged(-1);
 
         boolean running = true;
         while (running) {
 
-            if (Tela.loginMenu() != 0) {
-                JOptionPane.showMessageDialog(null, "Saindo...");
-                return;
-            } else if (LoginControl.loginCod() == null) {
-                JOptionPane.showMessageDialog(null, "Login não permitido.");
-                continue;
+            if (Dados.getUserLogged() < 0) {
+                if (Tela.loginMenu() != 0) {
+                    JOptionPane.showMessageDialog(null, "Saindo...");
+                    return;
+                } else if (LoginControl.loginCod() == null) {
+                    JOptionPane.showMessageDialog(null, "Login não permitido.");
+                    continue;
+                }
             }
 
             switch (Tela.menuPrincipal()) {
@@ -278,7 +299,7 @@ public class Main {
                     break;
                 }
                 case 4: {   //sair
-                    running = false;
+                    Dados.setUserLogged(-1);
                     break;
                 }
             }

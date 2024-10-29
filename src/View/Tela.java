@@ -3,6 +3,7 @@ package View;
 import Control.GerenciaFornecedor;
 import Control.GerenciarCategoria;
 import Control.GerenciarProduto;
+import Persistence.Dados;
 
 import javax.swing.*;
 
@@ -17,7 +18,7 @@ public class Tela {
     public static int menuPrincipal() {
         Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Administrativo", "sair"};
 
-        return JOptionPane.showOptionDialog(null, "", "Menu Principal",
+        return JOptionPane.showOptionDialog(null, "Bem vindo, " + Dados.getPessoas().get(Dados.getUserLogged()).getNome(), "Menu Principal",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, mainBtt, mainBtt[0]);
     }
 
