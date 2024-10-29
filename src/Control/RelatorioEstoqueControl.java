@@ -100,16 +100,24 @@ public class RelatorioEstoqueControl {
                 break;
             }
             case 1: {   //Categoria
-                String nomeCat = SafeInputControl.sString("Filtrar por categoria", "Nome da categoria:");
-                if (nomeCat == null) break;
+                String nomeCat;
+                try {
+                    nomeCat = SafeInputControl.sString("Filtrar por categoria", "Nome da categoria:");
+                } catch (Exception e) {
+                    break;
+                }
 
                 JOptionPane.showMessageDialog(null, filtroCategoria(nomeCat),
                         "Mostrando os produtos pertencentes à categoria " + nomeCat, JOptionPane.DEFAULT_OPTION);
                 break;
             }
             case 2: {   //Produto
-                Integer prodCod = SafeInputControl.sInteger("Filtrar por Produto", "Codigo (ou nome posteriormente) do produto:");
-                if (prodCod == null) break;
+                Integer prodCod;
+                try {
+                    prodCod = SafeInputControl.sInteger("Filtrar por Produto", "Codigo (ou nome posteriormente) do produto:");
+                } catch (Exception e) {
+                    break;
+                }
 
                 JOptionPane.showMessageDialog(null, filtroProduto(prodCod),
                         "Mostrando o produto de codigo " + prodCod, JOptionPane.DEFAULT_OPTION);
@@ -118,8 +126,17 @@ public class RelatorioEstoqueControl {
             case 3: {   //Quantidade
                 Integer min = 8, max = 10;
 
-                Integer prodCod = SafeInputControl.sInteger("Filtrar por quantidade", "Codigo (ou nome posteriormente) do produto:");
-                if (prodCod == null) break;
+                try {
+                    min = SafeInputControl.sInteger("Filtrar por Quantidade", "Menor quantidade:");
+                } catch (Exception e) {
+                    break;
+                }
+
+                try {
+                    max = SafeInputControl.sInteger("Filtrar por Quantidade", "Maior quantidade:");
+                } catch (Exception e) {
+                    break;
+                }
 
                 JOptionPane.showMessageDialog(null, filtroQuantidade(min, max),
                         "Mostrando os produtos com estoque entre " + min + " e " + max, JOptionPane.DEFAULT_OPTION);

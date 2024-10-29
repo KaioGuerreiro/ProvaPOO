@@ -19,13 +19,26 @@ public class GerenciarCategoria {
     }
 
     private static Categoria criar() {
-        String nome = SafeInputControl.sString("Cadastro de Categorias", "Nome da categoria:");
-        if (nome == null) return null;
 
-        Categoria tmpCat = new Categoria();
-        tmpCat.setNome(nome);
+        String nome = null;
+        while (true) {
+            try {
+                if (nome == null) nome = SafeInputControl.sString("Cadastro de Categorias", "Nome da categoria:");
+            } catch (Exception e) {
+                return null;
+            }
 
-        return tmpCat;
+            if (encontrar(nome) != -1) {
+                JOptionPane.showMessageDialog(null, "Essa categoria já existe!");
+                nome = null;
+                continue;
+            }
+
+            Categoria tmpCat = new Categoria();
+            tmpCat.setNome(nome);
+
+            return tmpCat;
+        }
     }
 
     public static void adicionar() {
@@ -35,35 +48,48 @@ public class GerenciarCategoria {
             return;
         }
 
-        if (encontrar(tmpCat.getNome()) >= 0) {
-            JOptionPane.showMessageDialog(null, "Essa categoria já existe!");
-        } else {
-            ArrayList<Categoria> tmpArr = Dados.getCategorias();
-            tmpArr.add(tmpCat);
+        ArrayList<Categoria> tmpArr = Dados.getCategorias();
+        tmpArr.add(tmpCat);
 
-            Dados.setCategorias(tmpArr);
-            JOptionPane.showMessageDialog(null, "Categoria adicionada!");
-        }
+        Dados.setCategorias(tmpArr);
+        JOptionPane.showMessageDialog(null, "Categoria adicionada!");
+
     }
 
     public static void modificar() {
-        String nome = SafeInputControl.sString("Cadastro de Categorias", "Nome da categoria à modificar");
-        if (nome == null) return;
 
-        int found = encontrar(nome);
-        if (found >= 0) {
-            String nvNome = SafeInputControl.sString("Cadastro de Categorias", "Novo nome dessa categoria:");
-            if (nvNome == null) return;
+        String nome = null;
 
-            if (encontrar(nvNome) >= 0) {
-                JOptionPane.showMessageDialog(null, "Não pode alerar, pois já existe uma categoria com esse nome");
+        while (true) {
+            try {
+                if (nome == null)
+                    nome = SafeInputControl.sString("Cadastro de Categorias", "Nome da categoria à modificar");
+            } catch (Exception e) {
                 return;
             }
 
-            Dados.getCategorias().get(found).setNome(nvNome);
-            JOptionPane.showMessageDialog(null, "Categoria alterada!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Categoria não encotrada!");
+            int found = encontrar(nome);
+            if (found >= 0) {
+
+                String nvNome;
+                try {
+                    nvNome = SafeInputControl.sString("Cadastro de Categorias", "Novo nome dessa categoria:");
+                } catch (Exception e) {
+                    return;
+                }
+
+                if (encontrar(nvNome) >= 0) {
+                    JOptionPane.showMessageDialog(null, "Não pode alerar, pois já existe uma categoria com esse nome.\nDigite outro.");
+                    continue;
+                }
+
+                Dados.getCategorias().get(found).setNome(nvNome);
+                JOptionPane.showMessageDialog(null, "Categoria alterada!");
+                return;
+            } else {
+                JOptionPane.showMessageDialog(null, "Categoria não encotrada!");
+                nome = null;
+            }
         }
     }
 

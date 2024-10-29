@@ -47,17 +47,21 @@ public class SafeInputControl {
         }
     }
 
-    public static String sString(String titulo, String msg) {
-        return getInput(titulo, msg, 1);
+    public static String sString(String titulo, String msg) throws Exception {
+        String str = getInput(titulo, msg, 1);
+        if (str == null) throw new Exception("canc");
+        else return str;
     }
 
-    public static Integer sInteger(String titulo, String msg) {
+    public static Integer sInteger(String titulo, String msg) throws Exception {
         String str = getInput(titulo, msg, 2);
-        return str == null ? null : Integer.valueOf(str);
+        if (str == null) throw new Exception("canc");
+        else return Integer.valueOf(str);
     }
 
-    public static Float sFloat(String titulo, String msg) {
+    public static Float sFloat(String titulo, String msg) throws Exception {
         String str = getInput(titulo, msg, 3);
-        return str == null ? null : Float.valueOf(str);
+        if (str == null) throw new Exception("canc");
+        else return Float.valueOf(str);
     }
 }

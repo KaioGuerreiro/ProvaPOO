@@ -37,42 +37,79 @@ public class GerenciarProduto {
 
     private static Produto criar() {
         //int codigo, String nome, int quantidadeEstoque, int quantidadeMin, float preco, boolean excluido, Fornecedor fornecedor
-        Integer codi = SafeInputControl.sInteger("Cadastro de Produtos", "Codigo do produto:");
-        String nome = SafeInputControl.sString("Cadastro de Produtos", "Nome do produto:");
-        Integer qntEst = 1;
-        Integer qntMinEst = 10;
-        Float preco = SafeInputControl.sFloat("Cadastro de Produtos", "Valor unitário do produto:");
-        boolean excl = false;
-        String forn = SafeInputControl.sString("Cadastro de Produtos", "Nome do fornecedor");
+        Integer codi = null;
+        String forn = null;
 
-        int indexForn = GerenciaFornecedor.encontrar(forn);
-        if (indexForn < 0) {
-            JOptionPane.showMessageDialog(null, "Fornecedor não encontrado!");
-            return null;
+        while (true) {
+            try {
+                if (codi == null) codi = SafeInputControl.sInteger("Cadastro de Produtos", "Codigo do produto:");
+            } catch (Exception e) {
+                return null;
+            }
+
+            int[] found = encontrar(codi);
+            if (found[0] >= 0 || found[1] >= 0) {
+                JOptionPane.showMessageDialog(null, "Esse produto já existe! digite outro.");
+                continue;
+            }
+
+            String nome;
+            try {
+                nome = SafeInputControl.sString("Cadastro de Produtos", "Nome do produto:");
+            } catch (Exception e) {
+                return null;
+            }
+
+            Integer qntEst = 1;
+            Integer qntMinEst = 10;
+            boolean excl = false;
+            Float preco;
+
+            try {
+                preco = SafeInputControl.sFloat("Cadastro de Produtos", "Valor unitário do produto:");
+            } catch (Exception e) {
+                return null;
+            }
+
+            try {
+                if (forn == null) forn = SafeInputControl.sString("Cadastro de Produtos", "Nome do fornecedor");
+            } catch (Exception e) {
+                return null;
+            }
+
+            int indexForn = GerenciaFornecedor.encontrar(forn);
+            if (indexForn < 0) {
+                JOptionPane.showMessageDialog(null, "Fornecedor não encontrado! digite outro.");
+                forn = null;
+                continue;
+            }
+
+            Fornecedor fornecedor = Dados.getFornecedores().get(indexForn);
+
+            return new Produto(codi, nome, qntEst, qntMinEst, preco, excl, fornecedor);
         }
-
-        Fornecedor fornecedor = Dados.getFornecedores().get(indexForn);
-
-        return new Produto(codi, nome, qntEst, qntMinEst, preco, excl, fornecedor);
     }
 
     public static void adicionar() {
-        String categ = SafeInputControl.sString("Cadastro de Produtos", "Nome da categoria");
-        if (categ == null) return;
+        String categ = null;
 
-        int indexCateg = GerenciarCategoria.encontrar(categ);
-        if (indexCateg < 0) {
-            JOptionPane.showMessageDialog(null, "Categoria nao encontrada");
-            return;
-        }
+        while (true) {
+            try {
+                if (categ == null) categ = SafeInputControl.sString("Cadastro de Produtos", "Nome da categoria");
+            } catch (Exception e) {
+                return;
+            }
 
-        Produto tmpProd = criar();
-        if (tmpProd == null) return;
+            int indexCateg = GerenciarCategoria.encontrar(categ);
+            if (indexCateg < 0) {
+                JOptionPane.showMessageDialog(null, "Categoria nao encontrada! digite outra.");
+                categ = null;
+                continue;
+            }
 
-        int[] found = encontrar(tmpProd.getCodigo());
-        if (found[0] >= 0 || found[1] >= 0) {
-            JOptionPane.showMessageDialog(null, "Esse produto já existe!");
-        } else {
+            Produto tmpProd = criar();
+            if (tmpProd == null) return;
+
             //Necessário modificar o vetor de produtos da categoria que o usuario escolheu.
 
             Categoria tmpCate = Dados.getCategorias().get(indexCateg);  //Categoria que o usuario digitou.
@@ -88,6 +125,7 @@ public class GerenciarProduto {
             Dados.setCategorias(allCategorias); //Devolvendo o novo array de categorias ao Dados, já com o novo produto.
 
             JOptionPane.showMessageDialog(null, "Produto adicionado!");
+            return;
         }
     }
 }

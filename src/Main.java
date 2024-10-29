@@ -1,4 +1,7 @@
-import Control.*;
+import Control.GerenciarVenda;
+import Control.LoginControl;
+import Control.RelatorioEstoqueControl;
+import Control.RelatorioVendaControl;
 import Model.*;
 import Persistence.Dados;
 import View.Tela;
@@ -165,7 +168,7 @@ public class Main {
         }
     }
 
-    static void testInputs() {
+    /*static void testInputs() {
 
         String tmpstr = SafeInputControl.sString("SafeStrig", "uma string:");
         if (tmpstr != null) JOptionPane.showMessageDialog(null, tmpstr);
@@ -179,7 +182,7 @@ public class Main {
         Float tmpFlo = SafeInputControl.sFloat("SafeStrig", "um float:");
         if (tmpFlo != null) JOptionPane.showMessageDialog(null, tmpFlo);
         else JOptionPane.showMessageDialog(null, "operação cancelada");
-    }
+    }*/
 
     private static void addAdmUser() {
         Administrador adm = new Administrador();

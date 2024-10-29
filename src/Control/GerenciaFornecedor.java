@@ -18,18 +18,35 @@ public class GerenciaFornecedor {
     }
 
     public static Fornecedor criar() {
-        //mock
-        String nome = SafeInputControl.sString("Cadstro de Fornecedor", "Nome:");
-        if (nome == null) return null;
 
-        String contato = SafeInputControl.sString("Cadstro de Fornecedor", "Contato:");
-        if (contato == null) return null;
+        String nome = null;
 
-        Fornecedor tmpForn = new Fornecedor();
-        tmpForn.setNome(nome);
-        tmpForn.setContato(contato);
+        while (true) {
+            try {
+                if (nome == null) nome = SafeInputControl.sString("Cadstro de Fornecedor", "Nome:");
+            } catch (Exception e) {
+                return null;
+            }
 
-        return tmpForn;
+            if (encontrar(nome) != -1) {
+                JOptionPane.showMessageDialog(null, "fornecedor ja existe! digite outro");
+                nome = null;
+                continue;
+            }
+
+            String contato;
+            try {
+                contato = SafeInputControl.sString("Cadstro de Fornecedor", "Contato:");
+            } catch (Exception e) {
+                return null;
+            }
+
+            Fornecedor tmpForn = new Fornecedor();
+            tmpForn.setNome(nome);
+            tmpForn.setContato(contato);
+
+            return tmpForn;
+        }
     }
 
     public static void adicionar() {    //Essa função deveria estar em Dados
@@ -40,39 +57,52 @@ public class GerenciaFornecedor {
             return;
         }
 
-        if (encontrar(tmpF.getNome()) == -1) {
-            ArrayList<Fornecedor> tmpArr = Dados.getFornecedores();
-            tmpArr.add(tmpF);
-            Dados.setFornecedores(tmpArr);
-            JOptionPane.showMessageDialog(null, "Fornecedor adicionado!");
-        } else {
-            JOptionPane.showMessageDialog(null, "fornecedor ja existe");
-        }
+        ArrayList<Fornecedor> tmpArr = Dados.getFornecedores();
+        tmpArr.add(tmpF);
+        Dados.setFornecedores(tmpArr);
+        JOptionPane.showMessageDialog(null, "Fornecedor adicionado!");
     }
 
     public static void modificar() {
-        String nome = SafeInputControl.sString("Cadastro de Fornecedor", "Digite o nome do fornecedor à alterar:");
-        if (nome == null) return;
 
-        int found = encontrar(nome);
+        String nome = null;
 
-        if (found >= 0) {
-            String novoNome = SafeInputControl.sString("Cadastro de Fornecedor", "Novo nome:");
-            if (nome == null) return;
-
-            if (encontrar(novoNome) >= 0) {
-                JOptionPane.showMessageDialog(null, "não pode alterar, pois ja existe um fornecedor com esse nome");
+        while (true) {
+            try {
+                if (nome == null)
+                    nome = SafeInputControl.sString("Cadastro de Fornecedor", "Digite o nome do fornecedor à alterar:");
+            } catch (Exception e) {
                 return;
             }
 
-            ArrayList<Fornecedor> tmpArr = Dados.getFornecedores();
-            tmpArr.get(found).setNome(novoNome);
+            int found = encontrar(nome);
 
-            Dados.setFornecedores(tmpArr);
+            if (found >= 0) {
 
-            JOptionPane.showMessageDialog(null, "Fornecedor alterado!");
-        } else {
-            JOptionPane.showMessageDialog(null, "fornecedor não encontrado");
+                String novoNome;
+                try {
+                    novoNome = SafeInputControl.sString("Cadastro de Fornecedor", "Novo nome:");
+                } catch (Exception e) {
+                    return;
+                }
+
+                if (encontrar(novoNome) >= 0) {
+                    JOptionPane.showMessageDialog(null, "Não pode alterar, pois ja existe um fornecedor com esse nome.\nDigite outro.");
+                    continue;
+                }
+
+                ArrayList<Fornecedor> tmpArr = Dados.getFornecedores();
+                tmpArr.get(found).setNome(novoNome);
+
+                Dados.setFornecedores(tmpArr);
+
+                JOptionPane.showMessageDialog(null, "Fornecedor alterado!");
+
+                return;
+            } else {
+                JOptionPane.showMessageDialog(null, "fornecedor não encontrado");
+                nome = null;
+            }
         }
     }
 

@@ -25,49 +25,74 @@ public class GerenciarPessoa {
 
         int tipo = Tela.cadastrosTipoPessoas();
 
-        if (tipo < 0 || tipo > 2) return null;   //Cancelou
+        if (tipo < 0 || tipo > 2) return null;   //Usuario apertou em cancelar
 
-        Integer id = SafeInputControl.sInteger("Cadastro de Pessoas", "Digite o ID:");
-        if (id == null) return null;
+        Integer id = null;
 
-        String nome = SafeInputControl.sString("Cadastro de Pessoas", "Nome do Usuario:");
-        if (nome == null) return null;
-
-        String contato = SafeInputControl.sString("Cadastro de Pessoas", "Contato do Usuario:");
-        if (contato == null) return null;
-
-        switch (tipo) {
-            case 0: {   //Cliente
-                String dest = SafeInputControl.sString("Cadastro de Pessoas", "Destino do cliente");
-                if (dest == null) return null;
-
-                Cliente cli = new Cliente();
-                cli.setNome(nome);
-                cli.setContato(contato);
-                cli.setId(id);
-                cli.setDestino(dest);
-
-                return cli;
-            }
-            case 1: {   //Vendedor
-                Vendedor vend = new Vendedor();
-                vend.setNome(nome);
-                vend.setContato(contato);
-                vend.setId(id);
-
-                return vend;
-            }
-            case 2: {   //Adm
-                Administrador adm = new Administrador();
-                adm.setNome(nome);
-                adm.setContato(contato);
-                adm.setId(id);
-
-                return adm;
-            }
-            default: {
-                JOptionPane.showMessageDialog(null, "Tipo não definido! Esse erro não deveria aparecer pro usuario!");
+        while (true) {
+            try {
+                if (id == null) id = SafeInputControl.sInteger("Cadastro de Pessoas", "Digite o ID:");
+            } catch (Exception e) {
                 return null;
+            }
+
+            if (encontrar(id) != -1) {
+                JOptionPane.showMessageDialog(null, "Já existe um usuario com esse ID! digite outro.");
+                id = null;
+                continue;
+            }
+
+            String nome;
+            try {
+                nome = SafeInputControl.sString("Cadastro de Pessoas", "Nome do Usuario:");
+            } catch (Exception e) {
+                return null;
+            }
+
+            String contato;
+            try {
+                contato = SafeInputControl.sString("Cadastro de Pessoas", "Contato do Usuario:");
+            } catch (Exception e) {
+                return null;
+            }
+
+            switch (tipo) {
+                case 0: {   //Cliente
+                    String dest;
+                    try {
+                        dest = SafeInputControl.sString("Cadastro de Pessoas", "Destino do cliente");
+                    } catch (Exception e) {
+                        return null;
+                    }
+
+                    Cliente cli = new Cliente();
+                    cli.setNome(nome);
+                    cli.setContato(contato);
+                    cli.setId(id);
+                    cli.setDestino(dest);
+
+                    return cli;
+                }
+                case 1: {   //Vendedor
+                    Vendedor vend = new Vendedor();
+                    vend.setNome(nome);
+                    vend.setContato(contato);
+                    vend.setId(id);
+
+                    return vend;
+                }
+                case 2: {   //Adm
+                    Administrador adm = new Administrador();
+                    adm.setNome(nome);
+                    adm.setContato(contato);
+                    adm.setId(id);
+
+                    return adm;
+                }
+                default: {
+                    JOptionPane.showMessageDialog(null, "Tipo não definido! Esse erro não deveria aparecer pro usuario!");
+                    return null;
+                }
             }
         }
     }
@@ -76,54 +101,75 @@ public class GerenciarPessoa {
         Pessoa p = criar();
         if (p == null) return;
 
-        if (encontrar(p.getId()) == -1) {
-            ArrayList<Pessoa> tmpPpl = Dados.getPessoas();
-            tmpPpl.add(p);
+        ArrayList<Pessoa> tmpPpl = Dados.getPessoas();
+        tmpPpl.add(p);
 
-            Dados.setPessoas(tmpPpl);
+        Dados.setPessoas(tmpPpl);
 
-            JOptionPane.showMessageDialog(null, "Pessoa adicionada!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Já existe um usuario com esse nome");
-        }
+        JOptionPane.showMessageDialog(null, "Pessoa adicionada!");
     }
 
     public static void modificar() {
-        Integer id = SafeInputControl.sInteger("Modificando Pessoa", "Id da pessoa à ser modificada:");
-        if (id == null) return;
+        Integer id = null;
 
-        int indexP = encontrar(id);
-        if (indexP < 0) {
-            JOptionPane.showMessageDialog(null, "Pessoa não encontrada");
+        while (true) {
+            try {
+                if (id == null) id = SafeInputControl.sInteger("Modificando Pessoa", "Id da pessoa à ser modificada:");
+            } catch (Exception e) {
+                break;
+            }
+
+            int indexP = encontrar(id);
+            if (indexP < 0) {
+                JOptionPane.showMessageDialog(null, "Pessoa não encontrada! digite outra.");
+                id = null;
+                continue;
+            }
+
+            ArrayList<Pessoa> pplArr = Dados.getPessoas();
+            Pessoa p = pplArr.get(indexP); //Pessoa que o usuario selecionou;
+
+            String nvNome;
+            try {
+                nvNome = SafeInputControl.sString("Modificando Pessoa", "Novo nome (vazio cancela): ");
+            } catch (Exception e) {
+                nvNome = p.getNome();
+            }
+
+            p.setNome(nvNome);
+
+            if (p instanceof Cliente tmp) {
+
+                String nvDest;
+                try {
+                    nvDest = SafeInputControl.sString("Modificando cliente", "Novo destino: ");
+                } catch (Exception e) {
+                    return;
+                }
+
+                tmp.setDestino(nvDest);
+
+                pplArr.set(indexP, tmp);
+            } else if (p instanceof Administrador adm) {
+
+                String nvCfg;
+                try {
+                    nvCfg = SafeInputControl.sString("Modificando Administrador", "Ele pode gerenciar usuarios?: ");
+                } catch (Exception e) {
+                    return;
+                }
+
+                adm.setCanGerUser(nvCfg.equals("sim"));
+
+                pplArr.set(indexP, adm);
+            }
+
+            Dados.setPessoas(pplArr);
+            JOptionPane.showMessageDialog(null, "Pessoa modificada!");
             return;
         }
 
-        ArrayList<Pessoa> pplArr = Dados.getPessoas();
-        Pessoa p = pplArr.get(indexP); //Pessoa que o usuario selecionou;
-
-        String nvNome = SafeInputControl.sString("Modificando Pessoa", "Novo nome (vazio cancela): ");
-        if (nvNome == null) nvNome = p.getNome();
-
-        p.setNome(nvNome);
-
-        if (p instanceof Cliente tmp) {
-            String nvDest = SafeInputControl.sString("Modificando cliente", "Novo destino: ");
-            if (nvDest == null) return;
-
-            tmp.setDestino(nvDest);
-
-            pplArr.set(indexP, tmp);
-        } else if (p instanceof Administrador adm) {
-            String nvCfg = SafeInputControl.sString("Modificando Administrador", "Ele pode gerenciar usuarios?: ");
-            if (nvCfg == null) return;
-
-            adm.setCanGerUser(nvCfg.equals("sim"));
-
-            pplArr.set(indexP, adm);
-        }
-
-        Dados.setPessoas(pplArr);
-        JOptionPane.showMessageDialog(null, "Pessoa modificada!");
+        JOptionPane.showMessageDialog(null, "Mofificação cancelada");
     }
 
     public static void excluir() {

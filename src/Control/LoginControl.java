@@ -28,8 +28,13 @@ public class LoginControl {
 
 
     public static Integer loginCod() {
-        Integer codL = SafeInputControl.sInteger("Login", "Infome seu Codigo");
-        if (codL == null) return null;
+
+        Integer codL;
+        try {
+            codL = SafeInputControl.sInteger("Login", "Infome seu Codigo");
+        } catch (Exception e) {
+            return null;
+        }
 
         Integer indexUser = LoginControl.autLogin(codL);
 
