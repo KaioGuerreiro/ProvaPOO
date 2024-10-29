@@ -1,7 +1,4 @@
-import Control.LoginControl;
-import Control.RelatorioEstoqueControl;
-import Control.RelatorioVendaControl;
-import Control.SafeInputControl;
+import Control.*;
 import Model.*;
 import Persistence.Dados;
 import View.Tela;
@@ -218,7 +215,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        setTestDatas();
+        //setTestDatas();
         //getTestDAtas();
         //testInputs();
 
@@ -240,7 +237,7 @@ public class Main {
 
             switch (Tela.menuPrincipal()) {
                 case 0: {   //Realizar vendas
-                    //control
+                    GerenciarVenda.adicionar();
                     break;
                 }
                 case 1: {   //Consultar cadastros

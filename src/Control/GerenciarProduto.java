@@ -45,7 +45,13 @@ public class GerenciarProduto {
         boolean excl = false;
         String forn = SafeInputControl.sString("Cadastro de Produtos", "Nome do fornecedor");
 
-        Fornecedor fornecedor = Dados.getFornecedores().get(GerenciaFornecedor.encontrar(forn));
+        int indexForn = GerenciaFornecedor.encontrar(forn);
+        if (indexForn < 0) {
+            JOptionPane.showMessageDialog(null, "Fornecedor não encontrado!");
+            return null;
+        }
+
+        Fornecedor fornecedor = Dados.getFornecedores().get(indexForn);
 
         return new Produto(codi, nome, qntEst, qntMinEst, preco, excl, fornecedor);
     }

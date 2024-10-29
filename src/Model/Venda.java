@@ -10,6 +10,7 @@ public class Venda {
     private LocalDate data;
 
     public Venda() {
+        this.data = LocalDate.now();
     }
 
     public Venda(Vendedor vendedor, Cliente cliente, ArrayList<ProdutoVenda> carrinho) {
