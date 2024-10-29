@@ -26,7 +26,7 @@ public class GerenciarVenda {
                 continue;
             }
 
-            if (Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[0]).isExcluido()) {
+            if (Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[1]).isExcluido()) {
                 JOptionPane.showMessageDialog(null, "Este produto encontra-se excluido, digite outro.");
                 idCod = null;
                 continue;
