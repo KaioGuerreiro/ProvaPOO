@@ -288,7 +288,7 @@ public class Main {
                             break;
                         }
                         case 1: {    //adicionar pessoa.
-                            //control
+                            Tela.cadastrosPessoas();
                             break;
                         }
                         case 2: {    //voltar menu principal

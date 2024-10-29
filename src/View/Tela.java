@@ -2,6 +2,7 @@ package View;
 
 import Control.GerenciaFornecedor;
 import Control.GerenciarCategoria;
+import Control.GerenciarPessoa;
 import Control.GerenciarProduto;
 import Persistence.Dados;
 
@@ -134,5 +135,58 @@ public class Tela {
 
         return JOptionPane.showOptionDialog(null, "", "Administração",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, admBtts, admBtts[0]);
+    }
+
+    public static int avisos() {
+        switch (optCadastrosBTT()) {
+            case 0: {
+                GerenciarPessoa.adicionar();
+                break;
+            }
+            case 1: {
+                GerenciarPessoa.modificar();
+                break;
+            }
+            case 2: {
+
+                break;
+            }
+            case 3: {
+
+                break;
+            }
+        }
+
+        return 0;
+    }
+
+    public static int cadastrosPessoas() {
+        switch (optCadastrosBTT()) {
+            case 0: {
+                GerenciarPessoa.adicionar();
+                break;
+            }
+            case 1: {
+                GerenciarPessoa.modificar();
+                break;
+            }
+            case 2: {
+                GerenciarPessoa.excluir();
+                break;
+            }
+            case 3: {
+
+                break;
+            }
+        }
+
+        return 0;
+    }
+
+    public static int cadastrosTipoPessoas() {
+        Object[] relatBtt = {"Cliente", "Vendedor", "Administrador"};
+
+        return JOptionPane.showOptionDialog(null, "", "Tipos de Pessoa",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, relatBtt, relatBtt[0]);
     }
 }
