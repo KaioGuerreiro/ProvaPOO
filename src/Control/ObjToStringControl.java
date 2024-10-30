@@ -49,11 +49,15 @@ public class ObjToStringControl {
 
             for (Object v : objects) {
                 float totalVenda = 0;
+                int totProdutos = 0;
                 Venda tmpV = (Venda) v; //Converte os Objects em Venda
 
                 //Cabecalho
-                result.append(tmpV.getVendedor().getId() + ";" + tmpV.getVendedor().getNome() + ";" + tmpV.getCliente().getId() +
-                        ";" + tmpV.getCliente().getNome() + ";" + tmpV.getCliente().getDestino() + ";" + tmpV.getData() + "\n");
+                result.append("Vendedor: " + tmpV.getVendedor().getId() + ";" + tmpV.getVendedor().getNome() + ";Cliente: " + tmpV.getCliente().getId() +
+                        ";" + tmpV.getCliente().getNome() + ";Destino: " + tmpV.getCliente().getDestino() + ";" + tmpV.getData() + "\n");
+
+                //Cabeçalho do produto
+                result.append("Categoria;Codigo;Produto;Unitario;Quantidade;SubTotal\n");
 
                 //Produtos
                 StringBuilder strProds = new StringBuilder();
@@ -61,15 +65,16 @@ public class ObjToStringControl {
                 for (ProdutoVenda c : tmpV.getCarrinho()) {
                     float subTotal = c.getPreco() * c.getQntVendida();
                     totalVenda += subTotal;
+                    totProdutos += c.getQntVendida();
 
                     strProds.append(c.getCategoria() + ";" + c.getCodigo() + ";" + c.getNome() + ";" + c.getPreco() + ";" + c.getQntVendida() + ";" + subTotal + "\n");
                 }
 
-                result.append(strProds + "" + totalVenda + "\n");
+                result.append(strProds + "Totais Venda;;;;" + totProdutos + ";" + totalVenda + "\n\n");
                 totalGeral += totalVenda;
             }
 
-            result.append("TotalGeral:" + totalGeral + "\n");
+            result.append("TotalGeral:;;;;;" + totalGeral + "\n");
 
 
         } else throw new Exception("O tipo de Object não foi reconhecido!");

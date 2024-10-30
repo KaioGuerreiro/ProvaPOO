@@ -5,9 +5,9 @@ import Model.Venda;
 import Persistence.Dados;
 import View.Relatorios;
 
-import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class RelatorioVendaControl {
     private static ArrayList<Venda> getAllVendas() {
@@ -86,23 +86,20 @@ public class RelatorioVendaControl {
         }
     }
 
-    public static String filtroVolume() {    //requisito não compreendido
+
+    public static ArrayList<Venda> orqQntVendida(ArrayList<Venda> vendas) {
+        ArrayList<Venda> copiaVenda = new ArrayList<>(vendas);
+
+        copiaVenda.sort(Comparator.comparingInt(Venda::getQntProdutos).reversed());
+
+        return copiaVenda;
+    }
+
+    public static String filtroVolume() {    //Ordenação por produtos mais vendidos
         ArrayList<Object> tempListaVendas = new ArrayList<>();
 
-        JOptionPane.showMessageDialog(null, "filtro ainda nao implementado!");
-
-        if (tempListaVendas.isEmpty()) {
-            return null;
-        }
-
-
-        for (Venda v : getAllVendas()) {
-            for (ProdutoVenda pv : v.getCarrinho()) {
-                if (false) {
-                    tempListaVendas.add(v);
-                    break;
-                }
-            }
+        for (Venda v : orqQntVendida(getAllVendas())) {
+            tempListaVendas.add(v);
         }
 
         try {

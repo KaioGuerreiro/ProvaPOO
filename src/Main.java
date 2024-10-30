@@ -135,7 +135,7 @@ public class Main {
                             Tela.cadastrosPessoas();
                             break;
                         }
-                        case 2: {    //voltar menu principal
+                        case 2: {    //vo1ltar menu principal
 
                             break;
                         }

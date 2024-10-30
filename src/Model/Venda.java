@@ -48,6 +48,14 @@ public class Venda {
         return data;
     }
 
+    public int getQntProdutos() {
+        int qnt = 0;
+        for (ProdutoVenda pv : carrinho) {
+            qnt += pv.getQntVendida();
+        }
+        return qnt;
+    }
+
     public void setData() {
         this.data = LocalDate.now();
     }
