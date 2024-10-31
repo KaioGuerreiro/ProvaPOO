@@ -61,7 +61,12 @@ public class GerenciarVenda {
 
         Cliente selCli = (Cliente) GerenciarPessoa.selectPessoa(GerenciarPessoa.filterByClients(Dados.getPessoas()));
         if (selCli == null) return null; //usuario cancelou
-        tmpVenda.setCliente(selCli);
+        Cliente copyCli = new Cliente(); //Pro caso de o estino for alterado.
+        copyCli.setNome(selCli.getNome());
+        copyCli.setDestino(selCli.getDestino());
+        copyCli.setId(selCli.getId());
+        copyCli.setContato(selCli.getContato());
+        tmpVenda.setCliente(copyCli);
 
         while (true) {
 
