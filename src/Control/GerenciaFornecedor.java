@@ -49,6 +49,7 @@ public class GerenciaFornecedor {
         }
     }
 
+
     public static void adicionar() {    //Essa função deveria estar em Dados
         Fornecedor tmpF = criar();
 
@@ -61,44 +62,68 @@ public class GerenciaFornecedor {
         JOptionPane.showMessageDialog(null, "Fornecedor adicionado!");
     }
 
+    public static Fornecedor selectFornecedor() {
+        ArrayList<Fornecedor> todos = Dados.getFornecedores();
+        if (todos == null || todos.isEmpty()) return null;
+
+        Fornecedor select = (Fornecedor) JOptionPane.showInputDialog(
+                null,
+                "Selecione o fornecedor:",
+                "Fornecedor Encontrados",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                todos.toArray(),
+                todos.get(0)
+        );
+
+        return select;
+    }
+
     public static void modificar() {
 
-        String nome = null;
+        Fornecedor fornMod = selectFornecedor();
+        if (fornMod == null) return;
 
         while (true) {
-            try {
-                if (nome == null)
-                    nome = SafeInputControl.sString("Cadastro de Fornecedor", "Digite o nome do fornecedor à alterar:");
-            } catch (Exception e) {
-                return;
-            }
 
-            int found = encontrar(nome);
+            String[] cBoxArr = {"Nome: " + fornMod.getNome(), "Contato: " + fornMod.getContato()};
+            /* O array deve obrigatoriamente ser:
+                nome ; contato
+             */
+            switch (View.Cadastros.showOpcoes("Modificar", cBoxArr)) {
+                case 0: {
+                    try {
+                        String novoNome = SafeInputControl.sString("Cadastro de Fornecedor", "Novo nome:");
 
-            if (found >= 0) {
+                        if (encontrar(novoNome) >= 0) {
+                            JOptionPane.showMessageDialog(null, "Não pode alterar, pois ja existe um fornecedor com esse nome.\nDigite outro.");
+                            break;
+                        }
 
-                String novoNome;
-                try {
-                    novoNome = SafeInputControl.sString("Cadastro de Fornecedor", "Novo nome:");
-                } catch (Exception e) {
+                        fornMod.setNome(novoNome);
+
+                    } catch (Exception e) {
+                        return;
+                    }
+                    break;
+                }
+                case 1: {
+                    try {
+                        String novoContato = SafeInputControl.sString("Cadastro de Fornecedor", "Novo contato:");
+
+                        fornMod.setContato(novoContato);
+
+                    } catch (Exception e) {
+                        return;
+                    }
+                    break;
+                }
+                default:
                     return;
-                }
-
-                if (encontrar(novoNome) >= 0) {
-                    JOptionPane.showMessageDialog(null, "Não pode alterar, pois ja existe um fornecedor com esse nome.\nDigite outro.");
-                    continue;
-                }
-
-                Dados.getFornecedores().get(found).setNome(novoNome);
-
-                JOptionPane.showMessageDialog(null, "Fornecedor alterado!");
-                return;
-            } else {
-                JOptionPane.showMessageDialog(null, "fornecedor não encontrado");
-                nome = null;
             }
         }
     }
+
 
     public static int listagem() {
         String temp = "";

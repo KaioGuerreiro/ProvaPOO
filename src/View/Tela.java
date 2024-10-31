@@ -63,16 +63,8 @@ public class Tela {
         return 0;
     }
 
-    private static int optCadsProdutoBTT() {
-        Object[] optCadstroBtt = {"Criar", "Modificar", "Ajustar Estoque", "Excluir", "Listagem", "voltar"};
-
-        return JOptionPane.showOptionDialog(null, "", "Cadastros > ação",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, optCadstroBtt, optCadstroBtt[0]);
-
-    }
-
     public static int cadastrosProduto() {
-        switch (optCadsProdutoBTT()) {
+        switch (optCadastrosBTT()) {
             case 0: {
                 GerenciarProduto.adicionar();
                 break;
@@ -82,14 +74,6 @@ public class Tela {
                 break;
             }
             case 2: {
-                GerenciarProduto.ajustarEstoque();
-                break;
-            }
-            case 3: {
-                GerenciarProduto.excluir();
-                break;
-            }
-            case 4: {
                 GerenciarProduto.listagem();
                 break;
             }
@@ -123,7 +107,7 @@ public class Tela {
 
     public static int administrativo() {
         if (Dados.getPessoas().get(Dados.getUserLogged()) instanceof Administrador) {
-            Object[] admBtts = {"Avisos", "Cadastrar Usuario", "voltar"};
+            Object[] admBtts = {"Avisos", "Cadastro de Usuario", "voltar"};
 
             return JOptionPane.showOptionDialog(null, "", "Administração",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, admBtts, admBtts[0]);

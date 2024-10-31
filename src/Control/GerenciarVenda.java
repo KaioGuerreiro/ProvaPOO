@@ -9,33 +9,19 @@ import java.util.ArrayList;
 public class GerenciarVenda {
 
     private static ProdutoVenda criarPV() {
-        Integer idCod = null;
         Integer qntVend = null;
 
+        Produto selProd = null;
+
+
         while (true) {
-            try {
-                if (idCod == null) idCod = SafeInputControl.sInteger("Realizando Venda", "Digite o ID do produto:");
-            } catch (Exception e) {
-                return null;
-            }
-
-            int[] indexProd = GerenciarProduto.encontrar(idCod);
-            if (indexProd[0] < 0 || indexProd[1] < 0) {
-                JOptionPane.showMessageDialog(null, "Produto não encontrado, digite outro.");
-                idCod = null;
-                continue;
-            }
-
-            if (Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[1]).isExcluido()) {
+            if (selProd == null) selProd = GerenciarProduto.selectProduct();
+            if (selProd == null) return null;   //Usuario cancelou
+            else if (selProd.isExcluido()) {
                 JOptionPane.showMessageDialog(null, "Este produto encontra-se excluido, digite outro.");
-                idCod = null;
+                selProd = null;
                 continue;
             }
-
-            String nomeProd = Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[1]).getNome();
-            String nomeCat = Dados.getCategorias().get(indexProd[0]).getNome();
-            Float preco = Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[1]).getPreco();
-            Fornecedor forn = Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[1]).getFornecedor();
 
             try {
                 if (qntVend == null)
@@ -50,11 +36,11 @@ public class GerenciarVenda {
             }
 
             ProdutoVenda tmpPV = new ProdutoVenda();
-            tmpPV.setCodigo(idCod);
-            tmpPV.setNome(nomeProd);
-            tmpPV.setCategoria(nomeCat);
-            tmpPV.setPreco(preco);
-            tmpPV.setFornecedor(forn);
+            tmpPV.setCodigo(selProd.getCodigo());
+            tmpPV.setNome(selProd.getNome());
+            tmpPV.setCategoria(GerenciarProduto.getCategoriaFrom(selProd));
+            tmpPV.setPreco(selProd.getPreco());
+            tmpPV.setFornecedor(selProd.getFornecedor());
             tmpPV.setQntVendida(qntVend);
 
 
@@ -72,30 +58,12 @@ public class GerenciarVenda {
             return null;
         }
 
-        Integer idClient = null;
+
+        Cliente selCli = (Cliente) GerenciarPessoa.selectPessoa(GerenciarPessoa.filterByClients(Dados.getPessoas()));
+        if (selCli == null) return null; //usuario cancelou
+        tmpVenda.setCliente(selCli);
 
         while (true) {
-            try {
-                if (idClient == null) idClient = SafeInputControl.sInteger("Realizando Venda", "ID do cliente:");
-            } catch (Exception e) {
-                return null;
-            }
-
-            int clientIndex = GerenciarPessoa.encontrar(idClient);
-            if (clientIndex < 0) {
-                JOptionPane.showMessageDialog(null, "Cliente não encontrado, digite outro.");
-                idClient = null;
-                continue;
-            }
-
-            if (Dados.getPessoas().get(clientIndex) instanceof Cliente cli) {
-                tmpVenda.setCliente(cli);
-            } else {
-                JOptionPane.showMessageDialog(null, "O cliente selecionado não é de fato um cliente! digite outro.");
-                idClient = null;
-                continue;
-            }
-
 
             //Criando uma copia de todos os produtos cadastrados no sistema (para controlar o estoque individual)
             ArrayList<Produto> tmpArrProdutos = new ArrayList<>();

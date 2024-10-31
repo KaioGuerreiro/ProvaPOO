@@ -52,40 +52,46 @@ public class GerenciarCategoria {
         JOptionPane.showMessageDialog(null, "Categoria adicionada!");
     }
 
+
+    public static Categoria selectCategoria() {
+        ArrayList<Categoria> todos = Dados.getCategorias();
+        if (todos == null || todos.isEmpty()) return null;
+
+        Categoria select = (Categoria) JOptionPane.showInputDialog(
+                null,
+                "Selecione a Categoria:",
+                "Categorias encontradas",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                todos.toArray(),
+                todos.get(0)
+        );
+
+        return select;
+    }
+
+
     public static void modificar() {
 
-        String nome = null;
+        Categoria modC = selectCategoria();
+        if (modC == null) return;
 
         while (true) {
+            String nvNome;
             try {
-                if (nome == null)
-                    nome = SafeInputControl.sString("Cadastro de Categorias", "Nome da categoria à modificar");
+                nvNome = SafeInputControl.sString("Cadastro de Categorias", "Novo nome dessa categoria:");
             } catch (Exception e) {
                 return;
             }
 
-            int found = encontrar(nome);
-            if (found >= 0) {
-
-                String nvNome;
-                try {
-                    nvNome = SafeInputControl.sString("Cadastro de Categorias", "Novo nome dessa categoria:");
-                } catch (Exception e) {
-                    return;
-                }
-
-                if (encontrar(nvNome) >= 0) {
-                    JOptionPane.showMessageDialog(null, "Não pode alerar, pois já existe uma categoria com esse nome.\nDigite outro.");
-                    continue;
-                }
-
-                Dados.getCategorias().get(found).setNome(nvNome);
-                JOptionPane.showMessageDialog(null, "Categoria alterada!");
-                return;
-            } else {
-                JOptionPane.showMessageDialog(null, "Categoria não encotrada!");
-                nome = null;
+            if (encontrar(nvNome) >= 0) {
+                JOptionPane.showMessageDialog(null, "Não pode alerar, pois já existe uma categoria com esse nome.\nDigite outro.");
+                continue;
             }
+
+            modC.setNome(nvNome);
+            JOptionPane.showMessageDialog(null, "Categoria alterada!");
+            return;
         }
     }
 

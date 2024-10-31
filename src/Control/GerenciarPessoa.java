@@ -97,6 +97,33 @@ public class GerenciarPessoa {
         }
     }
 
+
+    public static ArrayList<Pessoa> filterByClients(ArrayList<Pessoa> ppl) {
+        ArrayList<Pessoa> filter = new ArrayList<>();
+
+        for (Pessoa p : ppl) {
+            if (p instanceof Cliente) filter.add(p);
+        }
+
+        return filter;
+    }
+
+    public static Pessoa selectPessoa(ArrayList<Pessoa> todos) {
+        if (todos == null || todos.isEmpty()) return null;
+
+        Pessoa select = (Pessoa) JOptionPane.showInputDialog(
+                null,
+                "Selecione a pessoa:",
+                "Pessoas encontradas",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                todos.toArray(),
+                todos.get(0)
+        );
+
+        return select;
+    }
+
     public static void adicionar() {
         Pessoa p = criar();
         if (p == null) return;
@@ -106,24 +133,11 @@ public class GerenciarPessoa {
     }
 
     public static void modificar() {
-        Integer id = null;
+        Pessoa pplMod = selectPessoa(Dados.getPessoas());
+        if (pplMod == null) return;
+
 
         while (true) {
-            try {
-                if (id == null) id = SafeInputControl.sInteger("Modificando Pessoa", "Id da pessoa à ser modificada:");
-            } catch (Exception e) {
-                break;
-            }
-
-            int indexP = encontrar(id);
-            if (indexP < 0) {
-                JOptionPane.showMessageDialog(null, "Pessoa não encontrada! digite outra.");
-                id = null;
-                continue;
-            }
-
-            Pessoa pplMod = Dados.getPessoas().get(indexP); //Pessoa que o usuario selecionou (é uma referência da memoria);
-
             String nvNome;
             try {
                 nvNome = SafeInputControl.sString("Modificando Pessoa", "Novo nome (vazio cancela): ");
@@ -180,4 +194,5 @@ public class GerenciarPessoa {
         JOptionPane.showMessageDialog(null, str);
 
     }
+
 }

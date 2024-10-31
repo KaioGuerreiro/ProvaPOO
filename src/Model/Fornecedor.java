@@ -19,4 +19,9 @@ public class Fornecedor {
     public void setContato(String contato) {
         this.contato = contato;
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

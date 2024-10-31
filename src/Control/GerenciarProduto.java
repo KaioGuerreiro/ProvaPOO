@@ -33,91 +33,159 @@ public class GerenciarProduto {
         return new int[]{-1, -1};
     }
 
+    public static String getCategoriaFrom(Produto p) {
+        for (Categoria c : Dados.getCategorias()) {
+            for (Produto pc : c.getProdutos()) {
+                if (pc == p) return c.getNome();
+            }
+        }
+        return "categoria não identificada";
+    }
+
+    public static ArrayList<Produto> getAll(boolean onlyActive) {
+        ArrayList<Produto> allProd = new ArrayList<>();
+
+        for (Categoria c : Dados.getCategorias()) {
+            for (Produto p : c.getProdutos()) {
+                if (!p.isExcluido() || !onlyActive) { //So add se não excluido, ou, se onlyActive for false.
+                    allProd.add(p);
+                }
+            }
+        }
+
+        return allProd;
+    }
+
+    private static int getNextCodi() {
+        int max = 1;
+        for (Produto p : getAll(false)) {
+            if (p.getCodigo() == max) max = p.getCodigo() + 1;
+        }
+        return max;
+    }
+
     private static Produto criar() {
         //int codigo, String nome, int quantidadeEstoque, int quantidadeMin, float preco, boolean excluido, Fornecedor fornecedor
-        Integer codi = null;
-        String forn = null;
-        String nome = null;
-        Float preco = null;
+        Integer codi = getNextCodi();
+        Fornecedor selForn = null;
+        String nome = "Padrao";
+        Float preco = 0F;
+
+        Integer qntEst = 1;
+        Integer qntMinEst = 0;
+        boolean excl = false;
 
         while (true) {
-            try {
-                if (codi == null) codi = SafeInputControl.sInteger("Cadastro de Produtos", "Codigo do produto:");
-            } catch (Exception e) {
-                return null;
-            }
+            String[] cBoxArr = {"Codigo: " + codi, "Nome: " + nome, "Estoque Inicial: " + qntEst,
+                    "Estoque Minimo: " + qntMinEst, "Valor unitário: " + preco, "Fornecedor: " + selForn};
 
-            int[] found = encontrar(codi);
-            if (found[0] >= 0 || found[1] >= 0) {
-                JOptionPane.showMessageDialog(null, "Esse produto já existe! digite outro.");
-                codi = null;
-                continue;
-            }
+            switch (View.Cadastros.showOpcoes("Criando produto", cBoxArr)) {
+                case 0: {
+                    try {
+                        codi = SafeInputControl.sInteger("Cadastro de Produtos", "Codigo do produto:");
 
-            try {
-                if (nome == null) nome = SafeInputControl.sString("Cadastro de Produtos", "Nome do produto:");
-            } catch (Exception e) {
-                return null;
-            }
-
-            Integer qntEst = 15;
-            Integer qntMinEst = 10;
-            boolean excl = false;
-
-            try {
-                if (preco == null)
-                    preco = SafeInputControl.sFloat("Cadastro de Produtos", "Valor unitário do produto:");
-                if (preco <= 0) {
-                    JOptionPane.showMessageDialog(null, "O valor do produto precisa ser maior que 0.");
-                    preco = null;
+                        int[] found = encontrar(codi);
+                        if (found[0] >= 0 || found[1] >= 0) {
+                            JOptionPane.showMessageDialog(null, "Esse produto já existe! digite outro.");
+                            codi = null;
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
                     continue;
                 }
-            } catch (Exception e) {
-                return null;
+                case 1: {
+                    try {
+                        nome = SafeInputControl.sString("Cadastro de Produtos", "Nome do produto:");
+                    } catch (Exception e) {
+                        continue;
+                    }
+
+                    continue;
+                }
+                case 2: {
+                    try {
+                        qntEst = SafeInputControl.sInteger("Cadastro de Produtos", "Estoque inicial:");
+                        if (qntEst < 0) {
+                            JOptionPane.showMessageDialog(null, "O estoque nao pode ser negativo!");
+                            qntEst = null;
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
+                    continue;
+                }
+                case 3: {
+                    try {
+                        qntMinEst = SafeInputControl.sInteger("Cadastro de Produtos", "Quantidade minima do estoque:");
+                        if (qntMinEst < 0) {
+                            JOptionPane.showMessageDialog(null, "Quantidade minima não pode ser negativa!");
+                            qntMinEst = null;
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
+                    continue;
+                }
+                case 4: {
+                    try {
+                        preco = SafeInputControl.sFloat("Cadastro de Produtos", "Valor unitário do produto:");
+                        if (preco <= 0) {
+                            JOptionPane.showMessageDialog(null, "O valor do produto precisa ser maior que 0.");
+                            preco = null;
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
+                    continue;
+                }
+                case 5: {
+                    selForn = GerenciaFornecedor.selectFornecedor();    //Se retornar nulo, sera tratado la embaixo.
+                    continue;
+                }
+                case -102: {
+                    //Cancelou
+                    return null;
+                }
+                case -99: { //Apertou X
+                    if (JOptionPane.showConfirmDialog(null, "Deseja salvar esse produto?",
+                            "Cadastro de Produto", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) return null;
+                    break;
+                }
+                default: {
+                    JOptionPane.showMessageDialog(null, "Retorno não identificado!", "Cadastro de produto", JOptionPane.DEFAULT_OPTION);
+                    return null;
+                }
             }
 
-            try {
-                if (forn == null) forn = SafeInputControl.sString("Cadastro de Produtos", "Nome do fornecedor");
-            } catch (Exception e) {
-                return null;
-            }
-
-            int indexForn = GerenciaFornecedor.encontrar(forn);
-            if (indexForn < 0) {
-                JOptionPane.showMessageDialog(null, "Fornecedor não encontrado! digite outro.");
-                forn = null;
-                continue;
-            }
-
-            Fornecedor fornecedor = Dados.getFornecedores().get(indexForn);
-
-            return new Produto(codi, nome, qntEst, qntMinEst, preco, excl, fornecedor);
+            //Validar nulos
+            if (
+                    codi == null ||
+                            nome == null ||
+                            qntEst == null ||
+                            qntMinEst == null ||
+                            preco == null ||
+                            selForn == null
+            ) {
+                JOptionPane.showMessageDialog(null, "Há algum parametro não preenchido!");
+            } else break;
         }
+
+        return new Produto(codi, nome, qntEst, qntMinEst, preco, excl, selForn);
     }
 
     public static void adicionar() {
-        String categ = null;
+
+        Categoria selCat = GerenciarCategoria.selectCategoria();
+        if (selCat == null) return;
 
         while (true) {
-            try {
-                if (categ == null) categ = SafeInputControl.sString("Cadastro de Produtos", "Nome da categoria");
-            } catch (Exception e) {
-                break;
-            }
-
-            int indexCateg = GerenciarCategoria.encontrar(categ);
-            if (indexCateg < 0) {
-                JOptionPane.showMessageDialog(null, "Categoria nao encontrada! digite outra.");
-                categ = null;
-                continue;
-            }
-
             Produto tmpProd = criar();
             if (tmpProd == null) break;
 
             //Necessário modificar o vetor de produtos da categoria que o usuario escolheu.
 
-            Dados.getCategorias().get(indexCateg).getProdutos().add(tmpProd);
+            selCat.getProdutos().add(tmpProd);
             JOptionPane.showMessageDialog(null, "Produto adicionado!");
             return;
         }
@@ -125,37 +193,41 @@ public class GerenciarProduto {
         JOptionPane.showMessageDialog(null, "Nenhum produto adicionado!");
     }
 
+
+    public static Produto selectProduct() {
+        ArrayList<Produto> todos = getAll(true);
+        if (todos == null || todos.isEmpty()) return null;
+
+        Produto select = (Produto) JOptionPane.showInputDialog(
+                null,
+                "Selecione o produto:",
+                "Produtos Encontrados",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                todos.toArray(),
+                todos.get(0)
+        );
+
+        return select;
+    }
+
+
     public static void modificar() {
 
-        Integer idProd = null;
-        int[] prodIndex = {-1, -1};
-
-        boolean prodFound = false;
-        while (!prodFound) {
-            try {
-                idProd = SafeInputControl.sInteger("Cadastro de Produto", "Id do produto à alterar:");
-            } catch (Exception e) {
-                return; //usuario cancelou
-            }
-
-            prodIndex = encontrar(idProd);
-            if (prodIndex[0] < 0 || prodIndex[1] < 0) {
-                JOptionPane.showMessageDialog(null, "Produto não encontrado! digite outro.");
-            } else prodFound = true;
-        }
+        Produto modP = selectProduct();
+        if (modP == null) return;
 
         boolean modificando = true;
         while (modificando) {
                 /* O array deve obrigatoriamente ser:
-                    nome ; qntmin ; preço ; exluido ; fornecedor
+                    nome ; qntEst ; qntmin ; preço ; exluido ; fornecedor
                  */
-            Produto modP = Dados.getCategorias().get(prodIndex[0]).getProdutos().get(prodIndex[1]);
 
-            String[] cBoxArr = {"Nome: " + modP.getNome(), "Qnt Minima Estoque: " + modP.getQuantidadeMin().toString(),
+            String[] cBoxArr = {"Nome: " + modP.getNome(), "Estoque: " + modP.getQuantidadeEstoque(), "Qnt Minima Estoque: " + modP.getQuantidadeMin().toString(),
                     "Valor Unitário: " + modP.getPreco().toString(), "Excluído: " + (modP.isExcluido() ? "sim" : "não"),
                     "Fornecedor: " + modP.getFornecedor().getNome()};
 
-            switch (View.GerProduto.modificar(cBoxArr)) {
+            switch (View.Cadastros.showOpcoes("Modificar", cBoxArr)) {
                 case 0: {
 
                     try {
@@ -169,7 +241,7 @@ public class GerenciarProduto {
                 case 1: {
 
                     try {
-                        modP.setQuantidadeMin(SafeInputControl.sInteger("Cadastro de Produto", "Quantidade minima estoque: "));
+                        modP.setQuantidadeEstoque(SafeInputControl.sInteger("Cadastro de Produto", "Quantidade em estoque: "));
                     } catch (Exception e) {
                         break;
                     }
@@ -179,7 +251,7 @@ public class GerenciarProduto {
                 case 2: {
 
                     try {
-                        modP.setPreco(SafeInputControl.sFloat("Cadastro de Produto", "Valor unitário:"));
+                        modP.setQuantidadeMin(SafeInputControl.sInteger("Cadastro de Produto", "Quantidade minima estoque: "));
                     } catch (Exception e) {
                         break;
                     }
@@ -187,6 +259,16 @@ public class GerenciarProduto {
                     break;
                 }
                 case 3: {
+
+                    try {
+                        modP.setPreco(SafeInputControl.sFloat("Cadastro de Produto", "Valor unitário:"));
+                    } catch (Exception e) {
+                        break;
+                    }
+
+                    break;
+                }
+                case 4: {
 
                     int opt = JOptionPane.showConfirmDialog(null, "Esse produto está excluido?", "Cadastro de Produto",
                             JOptionPane.YES_NO_CANCEL_OPTION);
@@ -197,21 +279,12 @@ public class GerenciarProduto {
 
                     break;
                 }
-                case 4: {
+                case 5: {
 
-                    String nomeForn;
-                    try {
-                        nomeForn = SafeInputControl.sString("Cadastro de Produto", "Digite o nome do fornecedor à alterar:");
-                    } catch (Exception e) {
-                        break;
-                    }
+                    Fornecedor selForn = GerenciaFornecedor.selectFornecedor();
+                    if (selForn == null) break;
 
-                    int fornIndex = GerenciaFornecedor.encontrar(nomeForn);
-                    if (fornIndex < 0) {
-                        JOptionPane.showMessageDialog(null, "Fornecedor não encontrado! digite outro.");
-                    } else {
-                        modP.getFornecedor().setNome(nomeForn);
-                    }
+                    modP.setFornecedor(selForn);
 
                     break;
                 }
@@ -221,83 +294,12 @@ public class GerenciarProduto {
         }
     }
 
-    public static void ajustarEstoque() {
-        Integer idCod = null;
-        Integer adjEst = null;
-
-        while (true) {
-
-            try {
-                if (idCod == null)
-                    idCod = SafeInputControl.sInteger("Ajuste de Estoque", "Codigo do produto à ajustar:");
-            } catch (Exception e) {
-                break;
-            }
-
-            int[] found = encontrar(idCod);
-            if (found[0] < 0 || found[1] < 0) {
-                JOptionPane.showMessageDialog(null, "Produto não encontrado. Digite outro");
-                idCod = null;
-                continue;
-            }
-
-            try {
-                if (adjEst == null)
-                    adjEst = SafeInputControl.sInteger("Ajuste de Estoque", "Ajustar o estoque em: (pode usar valor negativo)");
-            } catch (Exception e) {
-                break;
-            }
-
-
-            Produto act = Dados.getCategorias().get(found[0]).getProdutos().get(found[1]);
-
-            if (act.getQuantidadeEstoque() + adjEst < 0) {
-                JOptionPane.showMessageDialog(null, "Esse ajuste ficará negativo! Negado!");
-                adjEst = null;
-                continue;
-            }
-
-            act.setQuantidadeEstoque(act.getQuantidadeEstoque() + adjEst);
-            JOptionPane.showMessageDialog(null, "Ajuste realizado!");
-            return;
-        }
-
-        JOptionPane.showMessageDialog(null, "Nenhum ajuste realizado!");
-    }
-
-
-    public static void excluir() {
-        Integer idCod = null;
-
-        while (true) {
-            try {
-                if (idCod == null) idCod = SafeInputControl.sInteger("Realizando Venda", "Digite o ID do produto:");
-            } catch (Exception e) {
-                break;
-            }
-
-            int[] indexProd = GerenciarProduto.encontrar(idCod);
-            if (indexProd[0] < 0 || indexProd[1] < 0) {
-                JOptionPane.showMessageDialog(null, "Produto não encontrado, digite outro.");
-                idCod = null;
-                continue;
-            }
-
-            Dados.getCategorias().get(indexProd[0]).getProdutos().get(indexProd[1]).setExcluido(true);
-
-            JOptionPane.showMessageDialog(null, "Produto excluido");
-            return;
-        }
-
-        JOptionPane.showMessageDialog(null, "Nenhum produto excluido");
-    }
-
     public static void listagem() {
         String res = "";
         for (Categoria c : Dados.getCategorias()) {
-            String nomeCat = c.getNome();
+            String categ = c.getNome();
             for (Produto p : c.getProdutos()) {
-                res += "Categoria: " + nomeCat +
+                res += "Categoria: " + categ +
                         " cod: " + p.getCodigo() +
                         " Nome: " + p.getNome() +
                         " Min: " + p.getQuantidadeMin() +
@@ -306,8 +308,6 @@ public class GerenciarProduto {
                         " Excluido: " + p.isExcluido() + "\n";
             }
         }
-
-
         JOptionPane.showMessageDialog(null, res);
 
     }

@@ -74,4 +74,9 @@ public class Produto {
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
     }
+
+    @Override
+    public String toString() {
+        return codigo + " - " + nome;
+    }
 }
