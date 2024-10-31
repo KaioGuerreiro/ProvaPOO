@@ -30,10 +30,10 @@ public class Main {
         vend2.setId(2);
 
         Cliente cli = new Cliente();
-        cli.setNome("André Martins");
-        cli.setContato("andré@martins.COM");
+        cli.setNome("Andre Martins");
+        cli.setContato("andre@martins.COM");
         cli.setId(3);
-        cli.setDestino("Casa do André");
+        cli.setDestino("Casa do Andre");
 
         ArrayList<Pessoa> pps = Dados.getPessoas();
         pps.add(adm);

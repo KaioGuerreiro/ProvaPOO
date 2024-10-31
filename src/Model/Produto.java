@@ -3,9 +3,9 @@ package Model;
 public class Produto {
     private int codigo;
     private String nome;
-    private int quantidadeEstoque;
-    private int quantidadeMin;
-    private float preco;
+    private Integer quantidadeEstoque;
+    private Integer quantidadeMin;
+    private Float preco;
     private boolean excluido;
     private Fornecedor fornecedor = new Fornecedor();
 
@@ -35,7 +35,7 @@ public class Produto {
         this.nome = nome;
     }
 
-    public int getQuantidadeEstoque() {
+    public Integer getQuantidadeEstoque() {
         return quantidadeEstoque;
     }
 
@@ -43,7 +43,7 @@ public class Produto {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
-    public int getQuantidadeMin() {
+    public Integer getQuantidadeMin() {
         return quantidadeMin;
     }
 
@@ -51,7 +51,7 @@ public class Produto {
         this.quantidadeMin = quantidadeMin;
     }
 
-    public float getPreco() {
+    public Float getPreco() {
         return preco;
     }
 

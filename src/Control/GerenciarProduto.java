@@ -126,56 +126,99 @@ public class GerenciarProduto {
     }
 
     public static void modificar() {
+
         Integer idProd = null;
-        String nomeForn = null;
-        String novoNome = null;
+        int[] prodIndex = {-1, -1};
 
-
-        while (true) {
-
+        boolean prodFound = false;
+        while (!prodFound) {
             try {
-                if (idProd == null)
-                    idProd = SafeInputControl.sInteger("Cadastro de Produto", "Id do produto à alterar:");
+                idProd = SafeInputControl.sInteger("Cadastro de Produto", "Id do produto à alterar:");
             } catch (Exception e) {
-                break;
+                return; //usuario cancelou
             }
 
-            int[] prodIndex = encontrar(idProd);
+            prodIndex = encontrar(idProd);
             if (prodIndex[0] < 0 || prodIndex[1] < 0) {
                 JOptionPane.showMessageDialog(null, "Produto não encontrado! digite outro.");
-                idProd = null;
-                continue;
-            }
-
-            try {
-                if (novoNome == null) novoNome = SafeInputControl.sString("Cadastro de Produto", "Novo nome:");
-            } catch (Exception e) {
-                break;
-            }
-
-            try {
-                if (nomeForn == null)
-                    nomeForn = SafeInputControl.sString("Cadastro de Produto", "Digite o nome do fornecedor à alterar:");
-            } catch (Exception e) {
-                break;
-            }
-
-            int fornIndex = GerenciaFornecedor.encontrar(nomeForn);
-            if (fornIndex < 0) {
-                JOptionPane.showMessageDialog(null, "Fornecedor não encontrado! digite outro.");
-                nomeForn = null;
-                continue;
-            }
-
-
-            Dados.getCategorias().get(prodIndex[0]).getProdutos().get(prodIndex[1]).setNome(novoNome);
-            Dados.getCategorias().get(prodIndex[0]).getProdutos().get(prodIndex[1]).setFornecedor(Dados.getFornecedores().get(fornIndex));
-
-            JOptionPane.showMessageDialog(null, "Produto modificado!);");
-            return;
+            } else prodFound = true;
         }
 
-        JOptionPane.showMessageDialog(null, "Modificação do produto cancelada!");
+        boolean modificando = true;
+        while (modificando) {
+                /* O array deve obrigatoriamente ser:
+                    nome ; qntmin ; preço ; exluido ; fornecedor
+                 */
+            Produto modP = Dados.getCategorias().get(prodIndex[0]).getProdutos().get(prodIndex[1]);
+
+            String[] cBoxArr = {"Nome: " + modP.getNome(), "Qnt Minima Estoque: " + modP.getQuantidadeMin().toString(),
+                    "Valor Unitário: " + modP.getPreco().toString(), "Excluído: " + (modP.isExcluido() ? "sim" : "não"),
+                    "Fornecedor: " + modP.getFornecedor().getNome()};
+
+            switch (View.GerProduto.modificar(cBoxArr)) {
+                case 0: {
+
+                    try {
+                        modP.setNome(SafeInputControl.sString("Cadastro de Produto", "Novo nome:"));
+                    } catch (Exception e) {
+                        break;
+                    }
+
+                    break;
+                }
+                case 1: {
+
+                    try {
+                        modP.setQuantidadeMin(SafeInputControl.sInteger("Cadastro de Produto", "Quantidade minima estoque: "));
+                    } catch (Exception e) {
+                        break;
+                    }
+
+                    break;
+                }
+                case 2: {
+
+                    try {
+                        modP.setPreco(SafeInputControl.sFloat("Cadastro de Produto", "Valor unitário:"));
+                    } catch (Exception e) {
+                        break;
+                    }
+
+                    break;
+                }
+                case 3: {
+
+                    int opt = JOptionPane.showConfirmDialog(null, "Esse produto está excluido?", "Cadastro de Produto",
+                            JOptionPane.YES_NO_CANCEL_OPTION);
+
+                    if (opt == JOptionPane.CANCEL_OPTION) break;
+
+                    modP.setExcluido(opt == JOptionPane.YES_OPTION ? true : false);
+
+                    break;
+                }
+                case 4: {
+
+                    String nomeForn;
+                    try {
+                        nomeForn = SafeInputControl.sString("Cadastro de Produto", "Digite o nome do fornecedor à alterar:");
+                    } catch (Exception e) {
+                        break;
+                    }
+
+                    int fornIndex = GerenciaFornecedor.encontrar(nomeForn);
+                    if (fornIndex < 0) {
+                        JOptionPane.showMessageDialog(null, "Fornecedor não encontrado! digite outro.");
+                    } else {
+                        modP.getFornecedor().setNome(nomeForn);
+                    }
+
+                    break;
+                }
+                default:
+                    modificando = false;
+            }
+        }
     }
 
     public static void ajustarEstoque() {
