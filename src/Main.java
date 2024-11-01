@@ -18,30 +18,26 @@ public class Main {
         adm.setContato("ADM@ADM.COM");
         adm.setCanGerUser(true);
         adm.setId(0);
+        Dados.getPessoas().add(adm);
 
         Vendedor vend = new Vendedor();
         vend.setNome("Ivan Luiz");
         vend.setContato("ivan@luiz.COM");
         vend.setId(1);
+        Dados.getPessoas().add(vend);
 
         Vendedor vend2 = new Vendedor();
         vend2.setNome("Kaio Guerreiro");
         vend2.setContato("kaio@guerreiro.COM");
         vend2.setId(2);
+        Dados.getPessoas().add(vend2);
 
         Cliente cli = new Cliente();
         cli.setNome("Andre Martins");
         cli.setContato("andre@martins.COM");
         cli.setId(3);
         cli.setDestino("Casa do Andre");
-
-        ArrayList<Pessoa> pps = Dados.getPessoas();
-        pps.add(adm);
-        pps.add(vend);
-        pps.add(vend2);
-        pps.add(cli);
-
-        Dados.setPessoas(pps);
+        Dados.getPessoas().add(cli);
     }
 
     private static void addEstoque() {
@@ -49,7 +45,7 @@ public class Main {
         forn.setNome("forn");
         forn.setContato("fornecedor@contato.com");
 
-        Produto prod = new Produto(1, "Pista HotWheels Tubarão", 5, 10, 3584.98F, false, forn);
+        Produto prod = new Produto(1, "Pista HotWheels Tubarão", 5, 10, 2004.0F, false, forn);
         ArrayList<Produto> arrProd = new ArrayList<>();
         arrProd.add(prod);
 

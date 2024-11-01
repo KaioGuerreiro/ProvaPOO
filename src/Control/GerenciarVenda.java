@@ -48,6 +48,28 @@ public class GerenciarVenda {
         }
     }
 
+
+    public static String showCarrinho(ArrayList<ProdutoVenda> carrinho) {
+        String res = "";
+
+        Float totCarrinho = 0F;
+
+        for (ProdutoVenda pv : carrinho) {
+            Float subTot = pv.getPreco() * pv.getQntVendida();
+
+            res += "Categ.: " + pv.getCategoria() +
+                    " Nome: " + pv.getNome() +
+                    " Quant.: " + pv.getQntVendida() +
+                    " Valor: " + pv.getPreco() +
+                    "SubTotal: " + subTot + "\n";
+            totCarrinho += subTot;
+        }
+
+        res += "\n\nTotal: " + totCarrinho;
+
+        return res;
+    }
+
     private static Venda criar() {
         Venda tmpVenda = new Venda();
 
@@ -59,84 +81,87 @@ public class GerenciarVenda {
         }
 
 
-        Cliente selCli = (Cliente) GerenciarPessoa.selectPessoa(GerenciarPessoa.filterByClients(Dados.getPessoas()));
-        if (selCli == null) return null; //usuario cancelou
         Cliente copyCli = new Cliente(); //Pro caso de o estino for alterado.
-        copyCli.setNome(selCli.getNome());
-        copyCli.setDestino(selCli.getDestino());
-        copyCli.setId(selCli.getId());
-        copyCli.setContato(selCli.getContato());
-        tmpVenda.setCliente(copyCli);
+        {
+            Cliente selCli = (Cliente) GerenciarPessoa.selectPessoa(GerenciarPessoa.filterByClients(Dados.getPessoas()));
+            if (selCli == null) return null; //usuario cancelou
+            copyCli.setNome(selCli.getNome());
+            copyCli.setDestino(selCli.getDestino());
+            copyCli.setId(selCli.getId());
+            copyCli.setContato(selCli.getContato());
+            tmpVenda.setCliente(copyCli);
+        }
 
         while (true) {
 
             //Criando uma copia de todos os produtos cadastrados no sistema (para controlar o estoque individual)
             ArrayList<Produto> tmpArrProdutos = new ArrayList<>();
-            for (Categoria c : Dados.getCategorias()) {
-                for (Produto p : c.getProdutos()) {
-                    int codig = p.getCodigo();
-                    int qntEsto = p.getQuantidadeEstoque();
-                    int qntMini = p.getQuantidadeMin();
+            for (Produto p : GerenciarProduto.getAll(false)) {
+                int codig = p.getCodigo();
+                int qntEsto = p.getQuantidadeEstoque();
+                int qntMini = p.getQuantidadeMin();
 
-                    //a copia só precisa dessas três informações, o resto nunca será utilizado.
-                    Produto copyP = new Produto(codig, null, qntEsto, qntMini, 0, false, null);
+                //a copia só precisa dessas três informações, o resto nunca será utilizado.
+                Produto copyP = new Produto(codig, null, qntEsto, qntMini, 0, false, null);
 
-                    tmpArrProdutos.add(copyP);
-                }
+                tmpArrProdutos.add(copyP);
             }
 
 
             //Essa parte é pra montar o carrinho da venda. Ele verifica o estoque sempre que o usuario adiciona um produto.
             ArrayList<ProdutoVenda> tmpCarrinho = new ArrayList<>();
             while (true) {
-                ProdutoVenda pv = criarPV();
-                if (pv == null) break;
+                //add prod ; vender ; cancelar
+                switch (View.Venda.carrinho("Cliente: " + copyCli.getNome() + "\nCarrinho:\n" + showCarrinho(tmpCarrinho))) {
+                    case 0: {
+                        ProdutoVenda pv = criarPV();
+                        if (pv == null) break;
 
-                boolean canAdd = true;
+                        boolean canAdd = true;
 
+                        //Parte que verifica o estoque
+                        for (Produto p : tmpArrProdutos) {
+                            if (p.getCodigo() == pv.getCodigo()) {
+                                int emEst = p.getQuantidadeEstoque();
+                                int tentVend = pv.getQntVendida();
+                                int res = emEst - tentVend;
+                                if (res < 0) {  //Se a quantidade em estoque chegar a ser negativa, cancela
+                                    JOptionPane.showMessageDialog(null,
+                                            "Você está tentando vender mais do que há no estoque!\n" +
+                                                    "Estoque: " + emEst +
+                                                    "\nTentando vender: " + tentVend + "\nEsse produto não será adicionado ao carrinho!");
+                                    canAdd = false;
+                                } else p.setQuantidadeEstoque(res); //atualiza o novo estoque à cópia do produto.
 
-                //Parte que verifica o estoque
-                for (Produto p : tmpArrProdutos) {
-                    if (p.getCodigo() == pv.getCodigo()) {
-                        int emEst = p.getQuantidadeEstoque();
-                        int tentVend = pv.getQntVendida();
-                        int res = emEst - tentVend;
-                        if (res < 0) {
-                            JOptionPane.showMessageDialog(null,
-                                    "Você está tentando vender mais do que há no estoque!\n" +
-                                            "Estoque: " + emEst +
-                                            "\nTentando vender: " + tentVend + "\nEsse produto não será adicionado ao carrinho!");
-                            canAdd = false;
-                        } else p.setQuantidadeEstoque(res);
+                                //Adiciona um aviso de baixo estoque pros ADM, a variável booleana "excluido" é usada pra
+                                // não adicionar varios avisos pro mesmo produto nessa venda
+                                if (!p.isExcluido() && p.getQuantidadeEstoque() < p.getQuantidadeMin()) {
+                                    JOptionPane.showMessageDialog(null, "Atenção!\nProduto chegou em sua quantidade minima");
+                                    GerenciarAlertas.adicionar("Baixo estoque", pv.getCodigo() + "|" + pv.getNome());
+                                    p.setExcluido(true); //definindo essa flag, se o usuario adicionar esse produto novamente, não havera mais avisos.
+                                }
 
-                        //Adiciona um aviso de baixo estoque pros ADM, a variável booleana "excluido" é usada pra não adicionar varios avisos pro mesmo produto
-                        if (!p.isExcluido() && p.getQuantidadeEstoque() < p.getQuantidadeMin()) {
-                            JOptionPane.showMessageDialog(null, "Atenção!\nProduto chegou em sua quantidade minima");
-                            GerenciarAlertas.adicionar("Baixo estoque", pv.getCodigo() + "|" + pv.getNome());
-                            p.setExcluido(true);
+                                //Partir pra adição do próximo produto do carrinho
+                                break;
+                            }
                         }
 
-                        //Partir pra adição do próximo produto do carrinho
+                        if (canAdd) tmpCarrinho.add(pv);
                         break;
                     }
+                    case 1: {
+                        if (tmpCarrinho.isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "O carrinho não pode ser vazio!");
+                            break;
+                        }
+
+                        tmpVenda.setCarrinho(tmpCarrinho);
+                        return tmpVenda;
+                    }
+                    default:
+                        return null;
                 }
-
-
-                if (canAdd) tmpCarrinho.add(pv);
             }
-
-
-            if (tmpCarrinho.isEmpty()) {
-                if (JOptionPane.showConfirmDialog(null, "Carrinho não pode ser vazio! Digitar os produtos?", "",
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
-                    return null;
-                }
-                continue;
-            }
-
-            tmpVenda.setCarrinho(tmpCarrinho);
-
-            return tmpVenda;
         }
     }
 
