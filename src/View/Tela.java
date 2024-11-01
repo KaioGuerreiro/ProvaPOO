@@ -16,7 +16,7 @@ public class Tela {
 
 
     public static int menuPrincipal() {
-        Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Administrativo", "sair"};
+        Object[] mainBtt = {"Vender", "Cadastros", "Relatorios", "Administrativo", "logOff"};
 
         return JOptionPane.showOptionDialog(null, "Bem vindo, " + Dados.getPessoas().get(Dados.getUserLogged()).getNome() +
                         ((Dados.getPessoas().get(Dados.getUserLogged()) instanceof Vendedor vend) ?

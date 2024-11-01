@@ -64,7 +64,10 @@ public class GerenciaFornecedor {
 
     public static Fornecedor selectFornecedor() {
         ArrayList<Fornecedor> todos = Dados.getFornecedores();
-        if (todos == null || todos.isEmpty()) return null;
+        if (todos == null || todos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum fornecedor cadastrado!");
+            return null;
+        }
 
         Fornecedor select = (Fornecedor) JOptionPane.showInputDialog(
                 null,
@@ -84,13 +87,16 @@ public class GerenciaFornecedor {
         Fornecedor fornMod = selectFornecedor();
         if (fornMod == null) return;
 
+        Integer atribModify = null;
         while (true) {
 
             String[] cBoxArr = {"Nome: " + fornMod.getNome(), "Contato: " + fornMod.getContato()};
             /* O array deve obrigatoriamente ser:
                 nome ; contato
              */
-            switch (View.Cadastros.showOpcoes("Modificar", cBoxArr)) {
+
+            atribModify = View.Cadastros.showOpcoes("Modificar", cBoxArr, atribModify);
+            switch (atribModify) {
                 case 0: {
                     try {
                         String novoNome = SafeInputControl.sString("Cadastro de Fornecedor", "Novo nome:");

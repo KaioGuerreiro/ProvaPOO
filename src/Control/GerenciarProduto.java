@@ -75,11 +75,15 @@ public class GerenciarProduto {
         Integer qntMinEst = 0;
         boolean excl = false;
 
+        Integer atribModify = null;
         while (true) {
             String[] cBoxArr = {"Codigo: " + codi, "Nome: " + nome, "Estoque Inicial: " + qntEst,
                     "Estoque Minimo: " + qntMinEst, "Valor unitário: " + preco, "Fornecedor: " + selForn};
 
-            switch (View.Cadastros.showOpcoes("Criando produto", cBoxArr)) {
+            //Isso grava a seleção do usuario
+            atribModify = View.Cadastros.showOpcoes("Criando produto", cBoxArr, atribModify);
+
+            switch (atribModify) {
                 case 0: {
                     try {
                         codi = SafeInputControl.sInteger("Cadastro de Produtos", "Codigo do produto:");
@@ -196,7 +200,10 @@ public class GerenciarProduto {
 
     public static Produto selectProduct() {
         ArrayList<Produto> todos = getAll(true);
-        if (todos == null || todos.isEmpty()) return null;
+        if (todos == null || todos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum produto ativo encontrado!");
+            return null;
+        }
 
         Produto select = (Produto) JOptionPane.showInputDialog(
                 null,
@@ -218,6 +225,8 @@ public class GerenciarProduto {
         if (modP == null) return;
 
         boolean modificando = true;
+
+        Integer atribModify = null;
         while (modificando) {
                 /* O array deve obrigatoriamente ser:
                     nome ; qntEst ; qntmin ; preço ; exluido ; fornecedor
@@ -227,7 +236,8 @@ public class GerenciarProduto {
                     "Valor Unitário: " + modP.getPreco().toString(), "Excluído: " + (modP.isExcluido() ? "sim" : "não"),
                     "Fornecedor: " + modP.getFornecedor().getNome()};
 
-            switch (View.Cadastros.showOpcoes("Modificar", cBoxArr)) {
+            atribModify = View.Cadastros.showOpcoes("Modificar", cBoxArr, atribModify);
+            switch (atribModify) {
                 case 0: {
 
                     try {

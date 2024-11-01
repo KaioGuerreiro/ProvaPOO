@@ -32,8 +32,8 @@ public class ObjToStringControl {
                 ProdRelatorio tmpPr = (ProdRelatorio) pr; //Converte os Objects em ProdRelatorio.
 
                 result.append(tmpPr.nomeCategoria + ";" + tmpPr.prodCod + ";" + tmpPr.nomeProd + ";" + tmpPr.qntEstoque + ";" + tmpPr.qntMinEstoque +
-                        ";" + tmpPr.preco + ";" + tmpPr.nomeFornecedor + ";" + tmpPr.contatoFornecedor + ";" +
-                        (tmpPr.qntEstoque < tmpPr.qntMinEstoque ? "Sim" : "Não") +
+                        ";" + Utilities.fToBRL(tmpPr.preco) + ";" + tmpPr.nomeFornecedor + ";" + tmpPr.contatoFornecedor + ";" +
+                        (tmpPr.qntEstoque < tmpPr.qntMinEstoque ? "Sim" : "Nao") +
                         "\n");
 
             });
@@ -67,14 +67,16 @@ public class ObjToStringControl {
                     totalVenda += subTotal;
                     totProdutos += c.getQntVendida();
 
-                    strProds.append(c.getCategoria() + ";" + c.getCodigo() + ";" + c.getNome() + ";" + c.getPreco() + ";" + c.getQntVendida() + ";" + subTotal + "\n");
+                    ;
+                    strProds.append(c.getCategoria() + ";" + c.getCodigo() + ";" + c.getNome() + ";" +
+                            Utilities.fToBRL(c.getPreco()) + ";" + c.getQntVendida() + ";" + Utilities.fToBRL(subTotal) + "\n");
                 }
 
-                result.append(strProds + "Totais Venda;;;;" + totProdutos + ";" + totalVenda + "\n\n");
+                result.append(strProds + "Totais Venda;;;;" + totProdutos + ";" + Utilities.fToBRL(totalVenda) + "\n\n");
                 totalGeral += totalVenda;
             }
 
-            result.append("TotalGeral:;;;;;" + totalGeral + "\n");
+            result.append("TotalGeral:;;;;;" + Utilities.fToBRL(totalGeral) + "\n");
 
 
         } else throw new Exception("O tipo de Object não foi reconhecido!");

@@ -55,7 +55,10 @@ public class GerenciarCategoria {
 
     public static Categoria selectCategoria() {
         ArrayList<Categoria> todos = Dados.getCategorias();
-        if (todos == null || todos.isEmpty()) return null;
+        if (todos == null || todos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma categoria cadastrada!");
+            return null;
+        }
 
         Categoria select = (Categoria) JOptionPane.showInputDialog(
                 null,

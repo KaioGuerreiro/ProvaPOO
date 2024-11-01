@@ -109,7 +109,10 @@ public class GerenciarPessoa {
     }
 
     public static Pessoa selectPessoa(ArrayList<Pessoa> todos) {
-        if (todos == null || todos.isEmpty()) return null;
+        if (todos == null || todos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma pessoa encontrada!");
+            return null;
+        }
 
         Pessoa select = (Pessoa) JOptionPane.showInputDialog(
                 null,
