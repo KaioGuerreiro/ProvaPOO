@@ -45,7 +45,7 @@ public class Main {
         forn.setNome("forn");
         forn.setContato("fornecedor@contato.com");
 
-        Produto prod = new Produto(1, "Pista HotWheels Tubarão", 5, 10, 2004.0F, false, forn);
+        Produto prod = new Produto(1, "Pista HotWheels Tubarao", 5, 10, 2004.0F, false, forn);
         ArrayList<Produto> arrProd = new ArrayList<>();
         arrProd.add(prod);
 
