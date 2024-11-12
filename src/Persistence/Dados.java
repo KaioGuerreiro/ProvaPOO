@@ -66,6 +66,11 @@ public class Dados {
         Dados.vendas = vendas;
     }
 
+    public static boolean addVenda(Venda newV) {
+        Dados.vendas.add(newV);
+        return false;
+    }
+
     public static ArrayList<Fornecedor> getFornecedores() {
         return fornecedores;
     }

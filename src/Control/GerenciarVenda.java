@@ -194,7 +194,7 @@ public class GerenciarVenda {
             vend.setVendasRealizadas(vend.getVendasRealizadas() + 1);
         }
 
-        Dados.getVendas().add(tmpVenda);
-        JOptionPane.showMessageDialog(null, "Venda adicionada!");
+        if (!Dados.addVenda(tmpVenda))
+            JOptionPane.showMessageDialog(null, "Venda adicionada!");
     }
 }
