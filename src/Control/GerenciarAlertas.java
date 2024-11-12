@@ -10,7 +10,7 @@ public class GerenciarAlertas {
     public static void adicionar(String dado, String descr) {
         Alerta a = new Alerta(descr, dado);
 
-        Dados.getAlertas().add(a);
+        Dados.addAlerta(a);
     }
 
     public static ArrayList<Alerta> activeAlert() {

@@ -32,6 +32,11 @@ public class Dados {
         Dados.alertas = alertas;
     }
 
+    public static boolean addAlerta(Alerta newA) {
+        Dados.alertas.add(newA);
+        return false;
+    }
+
     public static ArrayList<Categoria> getCategorias() {
         return categorias;
     }
