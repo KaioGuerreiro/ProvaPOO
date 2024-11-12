@@ -48,8 +48,8 @@ public class GerenciarCategoria {
             return;
         }
 
-        Dados.getCategorias().add(tmpCat);
-        JOptionPane.showMessageDialog(null, "Categoria adicionada!");
+        if (!Dados.addCategoria(tmpCat))
+            JOptionPane.showMessageDialog(null, "Categoria adicionada!");
     }
 
 

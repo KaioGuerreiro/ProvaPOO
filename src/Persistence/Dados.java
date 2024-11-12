@@ -45,6 +45,11 @@ public class Dados {
         Dados.categorias = categorias;
     }
 
+    public static boolean addCategoria(Categoria newC) {
+        Dados.categorias.add(newC);
+        return false;
+    }
+
     public static ArrayList<Pessoa> getPessoas() {
         return pessoas;
     }
