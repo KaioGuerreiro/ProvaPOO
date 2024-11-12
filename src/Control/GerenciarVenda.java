@@ -15,7 +15,7 @@ public class GerenciarVenda {
 
 
         while (true) {
-            if (selProd == null) selProd = GerenciarProduto.selectProduct();
+            if (selProd == null) selProd = GerenciarProduto.selectProduct(true);
             if (selProd == null) return null;   //Usuario cancelou
             else if (selProd.isExcluido()) {
                 JOptionPane.showMessageDialog(null, "Este produto encontra-se excluido, digite outro.");

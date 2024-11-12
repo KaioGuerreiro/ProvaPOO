@@ -198,8 +198,8 @@ public class GerenciarProduto {
     }
 
 
-    public static Produto selectProduct() {
-        ArrayList<Produto> todos = getAll(true);
+    public static Produto selectProduct(boolean onlyActive) {
+        ArrayList<Produto> todos = getAll(onlyActive);
         if (todos == null || todos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhum produto ativo encontrado!");
             return null;
@@ -221,7 +221,7 @@ public class GerenciarProduto {
 
     public static void modificar() {
 
-        Produto modP = selectProduct();
+        Produto modP = selectProduct(false);
         if (modP == null) return;
 
         boolean modificando = true;
