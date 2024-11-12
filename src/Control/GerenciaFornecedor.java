@@ -58,8 +58,8 @@ public class GerenciaFornecedor {
             return;
         }
 
-        Dados.getFornecedores().add(tmpF);
-        JOptionPane.showMessageDialog(null, "Fornecedor adicionado!");
+        if (!Dados.addFornecedor(tmpF))
+            JOptionPane.showMessageDialog(null, "Fornecedor adicionado!");
     }
 
     public static Fornecedor selectFornecedor() {

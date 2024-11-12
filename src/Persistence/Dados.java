@@ -73,4 +73,9 @@ public class Dados {
     public static void setFornecedores(ArrayList<Fornecedor> fornecedores) {
         Dados.fornecedores = fornecedores;
     }
+
+    public static boolean addFornecedor(Fornecedor newF) {
+        Dados.fornecedores.add(newF);
+        return false;
+    }
 }
