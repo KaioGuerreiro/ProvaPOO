@@ -48,6 +48,11 @@ public class Dados {
         Dados.pessoas = pessoas;
     }
 
+    public static boolean addPessoa(Pessoa newP) {
+        Dados.pessoas.add(newP);
+        return false;
+    }
+
     public static ArrayList<Venda> getVendas() {
         return vendas;
     }

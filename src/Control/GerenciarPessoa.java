@@ -131,8 +131,8 @@ public class GerenciarPessoa {
         Pessoa p = criar();
         if (p == null) return;
 
-        Dados.getPessoas().add(p);
-        JOptionPane.showMessageDialog(null, "Pessoa adicionada!");
+        if (!Dados.addPessoa(p))
+            JOptionPane.showMessageDialog(null, "Pessoa adicionada!");
     }
 
     public static void modificar() {
