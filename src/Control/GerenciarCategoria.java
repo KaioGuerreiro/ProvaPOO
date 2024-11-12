@@ -42,14 +42,10 @@ public class GerenciarCategoria {
     }
 
     public static void adicionar() {
-        Categoria tmpCat = criar();
-        if (tmpCat == null) {
-            JOptionPane.showMessageDialog(null, "Nenhuma categoria adicionada");
-            return;
-        }
-
-        if (!Dados.addCategoria(tmpCat))
+        if (!Dados.addCategoria(criar()))
             JOptionPane.showMessageDialog(null, "Categoria adicionada!");
+        else
+            JOptionPane.showMessageDialog(null, "Nenhuma categoria adicionada");
     }
 
 

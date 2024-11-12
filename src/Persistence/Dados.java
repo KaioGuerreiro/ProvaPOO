@@ -33,8 +33,11 @@ public class Dados {
     }
 
     public static boolean addAlerta(Alerta newA) {
-        Dados.alertas.add(newA);
-        return false;
+        if (newA != null) {
+            Dados.alertas.add(newA);
+            return false;
+        }
+        return true;
     }
 
     public static ArrayList<Categoria> getCategorias() {
@@ -46,8 +49,11 @@ public class Dados {
     }
 
     public static boolean addCategoria(Categoria newC) {
-        Dados.categorias.add(newC);
-        return false;
+        if (newC != null) {
+            Dados.categorias.add(newC);
+            return false;
+        }
+        return true;
     }
 
     public static ArrayList<Pessoa> getPessoas() {
@@ -59,8 +65,11 @@ public class Dados {
     }
 
     public static boolean addPessoa(Pessoa newP) {
-        Dados.pessoas.add(newP);
-        return false;
+        if (newP != null) {
+            Dados.pessoas.add(newP);
+            return false;
+        }
+        return true;
     }
 
     public static ArrayList<Venda> getVendas() {
@@ -72,8 +81,11 @@ public class Dados {
     }
 
     public static boolean addVenda(Venda newV) {
-        Dados.vendas.add(newV);
-        return false;
+        if (newV != null) {
+            Dados.vendas.add(newV);
+            return false;
+        }
+        return true;
     }
 
     public static ArrayList<Fornecedor> getFornecedores() {
@@ -85,7 +97,10 @@ public class Dados {
     }
 
     public static boolean addFornecedor(Fornecedor newF) {
-        Dados.fornecedores.add(newF);
-        return false;
+        if (newF != null) {
+            Dados.fornecedores.add(newF);
+            return false;
+        }
+        return true;
     }
 }

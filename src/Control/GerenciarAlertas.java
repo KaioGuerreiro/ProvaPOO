@@ -8,9 +8,7 @@ import java.util.ArrayList;
 
 public class GerenciarAlertas {
     public static void adicionar(String dado, String descr) {
-        Alerta a = new Alerta(descr, dado);
-
-        Dados.addAlerta(a);
+        Dados.addAlerta(new Alerta(descr, dado));
     }
 
     public static ArrayList<Alerta> activeAlert() {

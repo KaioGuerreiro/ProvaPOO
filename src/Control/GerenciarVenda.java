@@ -167,10 +167,10 @@ public class GerenciarVenda {
 
     public static void adicionar() {
         Venda tmpVenda = criar();
-        if (tmpVenda == null) {
-            JOptionPane.showMessageDialog(null, "Nenhuma venda adicionada!");
-            return;
-        }
+
+        if (!Dados.addVenda(tmpVenda))
+            JOptionPane.showMessageDialog(null, "Venda adicionada!");
+        else return;
 
 
         //Atualizando os novos valores de estoque de cada produto utilizado.
@@ -189,12 +189,10 @@ public class GerenciarVenda {
             }
         }
 
-
+        //Atualiza a quantidade de vendas desse vendedor
         if (Dados.getPessoas().get(Dados.getUserLogged()) instanceof Vendedor vend) {
             vend.setVendasRealizadas(vend.getVendasRealizadas() + 1);
         }
 
-        if (!Dados.addVenda(tmpVenda))
-            JOptionPane.showMessageDialog(null, "Venda adicionada!");
     }
 }

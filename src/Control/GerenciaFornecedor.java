@@ -51,15 +51,10 @@ public class GerenciaFornecedor {
 
 
     public static void adicionar() {    //Essa função deveria estar em Dados
-        Fornecedor tmpF = criar();
-
-        if (tmpF == null) {
-            JOptionPane.showMessageDialog(null, "Nenhum fornecedor adicionado");
-            return;
-        }
-
-        if (!Dados.addFornecedor(tmpF))
+        if (!Dados.addFornecedor(criar()))
             JOptionPane.showMessageDialog(null, "Fornecedor adicionado!");
+        else
+            JOptionPane.showMessageDialog(null, "Nenhum fornecedor adicionado");
     }
 
     public static Fornecedor selectFornecedor() {
